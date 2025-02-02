@@ -1,0 +1,38 @@
+//
+//  SceneDelegate.swift
+//  FakeShop
+//
+//  Created by 이태형 on 2024/07/18.
+//
+
+import UIKit
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    var window: UIWindow?
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+//        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
+        
+        let loginVc = LoginVC()
+        let mainVc = MainTabBarController()
+        var isLogined: Bool = true
+        if let data: String = UserDefaults.standard.string(forKey: "userToken"){
+            isLogined = (data.count > 0)
+        }
+        window?.rootViewController = isLogined ? mainVc : UINavigationController(rootViewController: loginVc)
+        
+        window?.backgroundColor = .systemBackground
+        window?.makeKeyAndVisible()
+    }
+    
+    func changeRootView(_ vc: UIViewController, animated: Bool){
+        guard let window = self.window else{return}
+        window.rootViewController = vc
+        
+        UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve] ,animations: nil, completion: nil)
+    }
+}
+
