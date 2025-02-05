@@ -9,12 +9,24 @@ import UIKit
 
 class SideMenuView: UIView{
     
+    private let vm: MainVM = MainVM()
+    
     private let titleLabel: UILabel = UILabel()
-    private let categoryTable: UITableView = UITableView()
+    private let categoryCollectionView: UICollectionView = {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets.zero
+        layout.itemSize = CGSize(width: 176, height: 50)
+        layout.minimumLineSpacing = 12
+        layout.minimumInteritemSpacing = 12
+        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return collectionView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
+        reloadCategories()
     }
     
     required init?(coder: NSCoder) {
@@ -29,7 +41,16 @@ class SideMenuView: UIView{
 
 //MARK: - Func
 extension SideMenuView{
-    
+    private func reloadCategories(){
+        vm.getCategories(){ res in
+            switch res{
+            case .success(_):
+                self.categoryCollectionView.reloadData()
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
 }
 
 //MARK: - inital_UI
@@ -48,40 +69,53 @@ extension SideMenuView{
             $0.font = .systemFont(ofSize: 20, weight: .bold)
         }
         
-        [categoryTable].forEach{
+        
+        [categoryCollectionView].forEach{
             $0.dataSource = self
             $0.delegate = self
+            $0.register(CategoriesCollectionCell.self, forCellWithReuseIdentifier: CategoriesCollectionCell.identifier)
+            $0.backgroundColor = .white.withAlphaComponent(0)
+            $0.reloadData()
         }
     }
     //UI
     private func setUI(){
-        [titleLabel,].forEach{
+        [titleLabel, categoryCollectionView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: self.leadingAnchor, constant: 10),
             
-            titleLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -100)
+            categoryCollectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
+            categoryCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            categoryCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
+            categoryCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -60),
         ])
     }
 }
 
 
-//MARK: - DataSource & Delegate
-extension SideMenuView: UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+//MARK: - DataSource & Delegate & Layout
+extension SideMenuView: UICollectionViewDataSource{
+    //DataSource
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return Common.shared.categories.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell: CategoriesCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionCell.identifier, for: indexPath) as? CategoriesCollectionCell else{return UICollectionViewCell()}
+        
+        cell.titleLabel.text = Translation.language.ko[Common.shared.categories[indexPath.item]]
+        
+        return cell
     }
-    
 }
-extension SideMenuView: UITableViewDelegate{
-    
+extension SideMenuView: UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        Common.shared.categories[indexPath.item]
+    }
 }
-

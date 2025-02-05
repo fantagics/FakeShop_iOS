@@ -9,6 +9,7 @@ import UIKit
 
 class MainTabBarController: UITabBarController{
     
+//    private let vm: MainVM = MainVM()
     private let sideWidth: CGFloat = 200
     private var isSideMenuVisable = false
     private let sideMenuBackView: UIView = UIView()
@@ -29,7 +30,7 @@ class MainTabBarController: UITabBarController{
     return MainTabBarController()
 }
 
-//MARK: - FUNC
+//MARK: - FUNC(for SideMenu)
 extension MainTabBarController{
     private func toggleSideMenu(){
         func activity(){
@@ -132,7 +133,8 @@ extension MainTabBarController{
             sideMenuBackView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             sideMenuBackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             sideMenuBackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            sideMenu.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            
+            sideMenu.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 36),
             sideMenu.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -self.tabBar.frame.height),
             sideMenu.widthAnchor.constraint(equalToConstant: sideWidth),
             sideMenuLeading,
@@ -145,6 +147,7 @@ extension MainTabBarController: UITabBarControllerDelegate{
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         guard viewController.tabBarItem.tag != 0 else{
             toggleSideMenu()
+            print(Common.shared.categories.count)
             return false
         }
         return true

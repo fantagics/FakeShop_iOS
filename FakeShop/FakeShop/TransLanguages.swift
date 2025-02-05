@@ -8,7 +8,7 @@
 import UIKit
 
 class Translation{
-    static let shared: Translation = Translation()
+    static let language: Translation = Translation()
     private init(){}
     
     var ko: [String:String] = [

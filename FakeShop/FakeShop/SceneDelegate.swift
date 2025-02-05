@@ -18,11 +18,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let loginVc = LoginVC()
         let mainVc = MainTabBarController()
-        var isLogined: Bool = true
-        if let data: String = UserDefaults.standard.string(forKey: "userToken"){
-            isLogined = (data.count > 0)
+        if let token: String = UserDefaults.standard.string(forKey: "userToken"){
+            Common.shared.token = token
+            let loginTypeStr: String = UserDefaults.standard.string(forKey: "loginType") ?? LoginType.none.rawValue
+            Common.shared.loginType = LoginType(rawValue: loginTypeStr) ?? .none
         }
-        window?.rootViewController = isLogined ? mainVc : UINavigationController(rootViewController: loginVc)
+//        window?.rootViewController = (Common.shared.token.count > 0) ? mainVc : UINavigationController(rootViewController: loginVc)
+        
+//        window?.rootViewController = UINavigationController(rootViewController: loginVc)
+        window?.rootViewController = mainVc
         
         window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()

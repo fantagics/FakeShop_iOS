@@ -74,9 +74,8 @@ extension LoginVC{
             vm.loginValid(nameField, passwordField){ res in
                 switch res{
                 case .success(_):
-                    print("login Success")
-                    //Navigation Stack
-//                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootView(VC, animated: false)
+                    let nextvc = MainTabBarController()
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootView(nextvc, animated: false)
                 case .failure(let err):
                     self.present(UIAlertController.messageAlert(title: nil, message: err.message, completion: nil), animated: true)
                 }

@@ -30,3 +30,11 @@ struct SignUpRes: Codable{
 struct UserToken: Codable{
     let token: String
 }
+
+enum LoginType: String{
+    case none = "none"
+    case email = "email"
+    case kakao = "kakao"
+    case google = "google"
+    case apple = "apple"
+}

@@ -9,11 +9,14 @@ import UIKit
 
 class MainVC: UIViewController {
     
+    private let vm: MainVM = MainVM()
+    
     //MARK: LC
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
+//        vm.getCategories()
     }
     
 }

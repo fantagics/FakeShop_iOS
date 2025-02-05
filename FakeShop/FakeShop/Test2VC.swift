@@ -38,9 +38,5 @@ extension Test2VC{
     }
     
     private func setUI(){
-        
-        NSLayoutConstraint.activate([
-            
-        ])
     }
 }

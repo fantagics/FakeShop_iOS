@@ -30,9 +30,10 @@ class LoginVM {
         AuthRequest.logIn(idText, pwText){ res in
             switch res{
             case .success(let data): //token
+                UserDefaults.standard.set(data.token, forKey: "userToken")
                 Common.shared.token = data.token
+                UserDefaults.standard.set(LoginType.email.rawValue, forKey: "loginType")
                 Common.shared.loginType = .email
-                //UserDefaults
                 completion(.success(data.token))
             case .failure(let err):
                 completion(.failure(.fail))

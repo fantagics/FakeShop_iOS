@@ -24,6 +24,7 @@
 		B634744B2D4F6ADF0067EBAF /* MainVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B634744A2D4F6ADF0067EBAF /* MainVM.swift */; };
 		B634744D2D4F6B150067EBAF /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B634744C2D4F6B150067EBAF /* ProductRequest.swift */; };
 		B634744F2D4F711B0067EBAF /* NetworkErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B634744E2D4F711B0067EBAF /* NetworkErrors.swift */; };
+		B63474532D50BFB50067EBAF /* CategoriesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63474522D50BFB50067EBAF /* CategoriesCollectionCell.swift */; };
 		B6389C242D40293E0055ED56 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6389C232D4029240055ED56 /* MainTabBarController.swift */; };
 		B6389C262D40363D0055ED56 /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6389C252D40363D0055ED56 /* UserInfoVC.swift */; };
 		B665D0722D37C4F400E84C9D /* ETAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665D0712D37C4F400E84C9D /* ETAlertController.swift */; };
@@ -83,6 +84,7 @@
 		B634744A2D4F6ADF0067EBAF /* MainVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVM.swift; sourceTree = "<group>"; };
 		B634744C2D4F6B150067EBAF /* ProductRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRequest.swift; sourceTree = "<group>"; };
 		B634744E2D4F711B0067EBAF /* NetworkErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrors.swift; sourceTree = "<group>"; };
+		B63474522D50BFB50067EBAF /* CategoriesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionCell.swift; sourceTree = "<group>"; };
 		B6389C232D4029240055ED56 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		B6389C252D40363D0055ED56 /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
 		B665D0712D37C4F400E84C9D /* ETAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETAlertController.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				B63474442D4CB5770067EBAF /* SideMenuView.swift */,
+				B63474522D50BFB50067EBAF /* CategoriesCollectionCell.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				B6F3C0412C502D1F00F5873C /* ColorSets.swift in Sources */,
 				B6F3C0462C54F6C400F5873C /* MainVC.swift in Sources */,
 				B62400B32C48E93C00A3D380 /* AppDelegate.swift in Sources */,
+				B63474532D50BFB50067EBAF /* CategoriesCollectionCell.swift in Sources */,
 				B665D07B2D3837AB00E84C9D /* AuthRequest.swift in Sources */,
 				B665D0872D3B8D0900E84C9D /* NetworkMonitor.swift in Sources */,
 				B619FEB12D1F259E008D945B /* ETResponder.swift in Sources */,
