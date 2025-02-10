@@ -11,12 +11,43 @@ class MainVC: UIViewController {
     
     private let vm: MainVM = MainVM()
     
+    private lazy var footer: NoticeFooter = NoticeFooter()
+    private let mainCollectionView: UICollectionView = {
+        let layout = UICollectionViewCompositionalLayout{ (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            //Item
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+            
+            //Group (row)
+            let groupSize =
+            NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: sectionIndex == 0 ? NSCollectionLayoutDimension.fractionalWidth(1173/2080) : NSCollectionLayoutDimension.fractionalWidth(1/2))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: sectionIndex == 0 ? 1 : 4)
+            
+            //Section
+            let section = NSCollectionLayoutSection(group: group)
+            let sectionInset: CGFloat = sectionIndex == 0 ? 0 : 20
+            section.contentInsets = NSDirectionalEdgeInsets(top: sectionInset, leading: sectionInset, bottom: sectionInset, trailing: sectionInset)
+            section.orthogonalScrollingBehavior = sectionIndex == 0 ? .paging : .continuous
+            
+            //Header or Footer 공간 확보
+            if sectionIndex != 0{
+                section.boundarySupplementaryItems = [
+                    NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(60)),
+                        elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                ]
+            }
+            return section
+        }
+        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }()
+    
     //MARK: LC
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
-//        vm.getCategories()
     }
     
 }
@@ -28,7 +59,6 @@ class MainVC: UIViewController {
 
 //MARK: - Func
 extension MainVC{
-    
 }
 
 //MARK: - inital_UI
@@ -61,12 +91,63 @@ extension MainVC{
     //Attribute
     private func setAttribute(){
         self.view.backgroundColor = .white
+        
+        [mainCollectionView].forEach{
+            $0.dataSource = self
+            $0.delegate = self
+            $0.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
+            $0.register(RecommendItemCell.self, forCellWithReuseIdentifier: RecommendItemCell.identifier)
+            $0.register(RecommendSectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RecommendSectionHeader.identifier)
+        }
     }
     //UI
     private func setUI(){
+        [mainCollectionView].forEach{
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
         
         NSLayoutConstraint.activate([
-            
+            mainCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mainCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            mainCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            mainCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
+}
+
+
+//MARK: - DataSource&Delegate
+extension MainVC: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return section == 0 ? 1 : (3+1)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 0 {
+            guard let cell: BannerCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as? BannerCollectionViewCell else{return UICollectionViewCell()}
+            cell.imageView.image = Common.shared.noticeArr[indexPath.item]
+            return cell
+        } else {
+            guard let cell: RecommendItemCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendItemCell.identifier, for: indexPath) as? RecommendItemCell else{return UICollectionViewCell()}
+            return cell
+        }
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader,
+              indexPath.section > 0,
+              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RecommendSectionHeader.identifier, for: indexPath) as? RecommendSectionHeader
+        else{return UICollectionReusableView()}
+        header.titleLabel.text = "Title"
+        return header
+    }
+}
+
+extension MainVC: UICollectionViewDelegate{
+    
 }

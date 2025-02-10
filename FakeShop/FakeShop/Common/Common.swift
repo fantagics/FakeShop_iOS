@@ -14,5 +14,6 @@ class Common{
     var token: String = ""
     var loginType: LoginType = .none
     var categories: [String] = []
+    let noticeArr: [UIImage] = ["event_0", "event_1", "event_2"].map{UIImage(named: $0)}.compactMap{$0}
 }
 

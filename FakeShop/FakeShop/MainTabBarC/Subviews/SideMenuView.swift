@@ -66,7 +66,7 @@ extension SideMenuView{
         [titleLabel].forEach{
             $0.text = "카테고리"
             $0.textColor = .white
-            $0.font = .systemFont(ofSize: 20, weight: .bold)
+            $0.font = .NanumGothic(type: .ExtraBold, size: 20)
         }
         
         
