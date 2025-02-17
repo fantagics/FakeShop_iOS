@@ -25,14 +25,19 @@ class SideMenuView: UIView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCategory(_:)), name: Notification.Name("receiveCategory"), object: nil)
         setup()
-        reloadCategories()
+        vm.getCategories()
+//        reloadCategories()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 #Preview("MainTabBarController"){
@@ -41,15 +46,19 @@ class SideMenuView: UIView{
 
 //MARK: - Func
 extension SideMenuView{
-    private func reloadCategories(){
-        vm.getCategories(){ res in
-            switch res{
-            case .success(_):
-                self.categoryCollectionView.reloadData()
-            case .failure(let err):
-                print(err)
-            }
-        }
+//    private func reloadCategories(){
+//        vm.getCategories(){ res in
+//            switch res{
+//            case .success(_):
+//                self.categoryCollectionView.reloadData()
+//            case .failure(let err):
+//                print(err)
+//            }
+//        }
+//    }
+    
+    @objc private func reloadCategory(_ sender: Notification){
+        categoryCollectionView.reloadData()
     }
 }
 

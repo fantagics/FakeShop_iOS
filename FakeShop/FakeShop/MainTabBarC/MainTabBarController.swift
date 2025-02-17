@@ -147,7 +147,6 @@ extension MainTabBarController: UITabBarControllerDelegate{
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         guard viewController.tabBarItem.tag != 0 else{
             toggleSideMenu()
-            print(Common.shared.categories.count)
             return false
         }
         return true

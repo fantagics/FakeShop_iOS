@@ -53,6 +53,7 @@
 		B6748A512D5A0A4F001E3090 /* NoticeImageFooter_later.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6748A502D5A0A4F001E3090 /* NoticeImageFooter_later.swift */; };
 		B6748A532D5A66ED001E3090 /* MainVC_later.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6748A522D5A66ED001E3090 /* MainVC_later.swift */; };
 		B6748A552D5A6925001E3090 /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6748A542D5A6925001E3090 /* BannerCollectionViewCell.swift */; };
+		B6748A8D2D5FDBC0001E3090 /* ETDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6748A8C2D5FDBC0001E3090 /* ETDouble.swift */; };
 		B68C17FA2C634B1900F8723A /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68C17F92C634B1900F8723A /* LoginVM.swift */; };
 		B68C17FC2C635BF500F8723A /* ETLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68C17FB2C635BF500F8723A /* ETLabel.swift */; };
 		B68C17FE2C635D5900F8723A /* ETURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68C17FD2C635D5900F8723A /* ETURL.swift */; };
@@ -127,6 +128,8 @@
 		B6748A502D5A0A4F001E3090 /* NoticeImageFooter_later.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeImageFooter_later.swift; sourceTree = "<group>"; };
 		B6748A522D5A66ED001E3090 /* MainVC_later.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC_later.swift; sourceTree = "<group>"; };
 		B6748A542D5A6925001E3090 /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
+		B6748A562D5B1313001E3090 /* FSPagerView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FSPagerView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6748A8C2D5FDBC0001E3090 /* ETDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETDouble.swift; sourceTree = "<group>"; };
 		B68C17F92C634B1900F8723A /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		B68C17FB2C635BF500F8723A /* ETLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETLabel.swift; sourceTree = "<group>"; };
 		B68C17FD2C635D5900F8723A /* ETURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETURL.swift; sourceTree = "<group>"; };
@@ -184,13 +187,13 @@
 				CDD4AB72B79AF35EC63D8DBC /* Pods-FakeShopTests.debug.xcconfig */,
 				FF163B0300F29FE9B01620C2 /* Pods-FakeShopTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		65BFB5CE9E1560ABD24AE326 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6748A562D5B1313001E3090 /* FSPagerView.framework */,
 				D70DB6E5890ED7826DBA1D56 /* Pods_FakeShop.framework */,
 				02A0D8A01943440DB7345ADB /* Pods_FakeShop_FakeShopUITests.framework */,
 				C0F0F5F019C23CEB51B625FD /* Pods_FakeShopTests.framework */,
@@ -444,6 +447,7 @@
 				B68C17FB2C635BF500F8723A /* ETLabel.swift */,
 				B619FEB02D1F259E008D945B /* ETResponder.swift */,
 				B665D0712D37C4F400E84C9D /* ETAlertController.swift */,
+				B6748A8C2D5FDBC0001E3090 /* ETDouble.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -459,6 +463,7 @@
 				B62400AB2C48E93C00A3D380 /* Sources */,
 				B62400AC2C48E93C00A3D380 /* Frameworks */,
 				B62400AD2C48E93C00A3D380 /* Resources */,
+				A27333D49F9EC2B971B7AB3F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -477,7 +482,6 @@
 				B62400C12C48E93D00A3D380 /* Sources */,
 				B62400C22C48E93D00A3D380 /* Frameworks */,
 				B62400C32C48E93D00A3D380 /* Resources */,
-				D0F97DA63CC6193265C1CC4D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -497,6 +501,7 @@
 				B62400CB2C48E93D00A3D380 /* Sources */,
 				B62400CC2C48E93D00A3D380 /* Frameworks */,
 				B62400CD2C48E93D00A3D380 /* Resources */,
+				92174FC818160AB3E63696C9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -590,6 +595,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		92174FC818160AB3E63696C9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FakeShop-FakeShopUITests/Pods-FakeShop-FakeShopUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FakeShop-FakeShopUITests/Pods-FakeShop-FakeShopUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FakeShop-FakeShopUITests/Pods-FakeShop-FakeShopUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A27333D49F9EC2B971B7AB3F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FakeShop/Pods-FakeShop-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FakeShop/Pods-FakeShop-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FakeShop/Pods-FakeShop-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AE456FE1CD685A3A43B16905 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -632,23 +671,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D0F97DA63CC6193265C1CC4D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FakeShopTests/Pods-FakeShopTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FakeShopTests/Pods-FakeShopTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FakeShopTests/Pods-FakeShopTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D7076465BA17272CD7EC01FD /* [CP] Check Pods Manifest.lock */ = {
@@ -697,6 +719,7 @@
 				B6F3C0412C502D1F00F5873C /* ColorSets.swift in Sources */,
 				B6F3C0462C54F6C400F5873C /* MainVC.swift in Sources */,
 				B62400B32C48E93C00A3D380 /* AppDelegate.swift in Sources */,
+				B6748A8D2D5FDBC0001E3090 /* ETDouble.swift in Sources */,
 				B63474532D50BFB50067EBAF /* CategoriesCollectionCell.swift in Sources */,
 				B665D07B2D3837AB00E84C9D /* AuthRequest.swift in Sources */,
 				B665D0872D3B8D0900E84C9D /* NetworkMonitor.swift in Sources */,
@@ -899,6 +922,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MAAR264X8X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeShop/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -930,6 +954,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MAAR264X8X;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeShop/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

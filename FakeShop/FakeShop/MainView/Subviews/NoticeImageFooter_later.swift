@@ -37,8 +37,3 @@ class NoticeFooter: UICollectionReusableView{
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-#Preview("MainVC"){
-    return UINavigationController(rootViewController: MainVC())
-    
-}

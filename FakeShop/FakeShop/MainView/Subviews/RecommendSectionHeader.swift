@@ -18,7 +18,7 @@ class RecommendSectionHeader: UICollectionReusableView{
         self.backgroundColor = .white
         [titleLabel].forEach{
             $0.textColor = .black
-            $0.font = .boldSystemFont(ofSize: 20)
+            $0.font = .NanumGothic(type: .Bold, size: 20)
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }

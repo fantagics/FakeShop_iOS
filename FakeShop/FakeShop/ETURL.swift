@@ -14,6 +14,19 @@ extension URL{
     static let logInUrl = finalUrl("auth/login")
     static let categoriesUrl = finalUrl("products/categories")
     
+    static func getItems(category: String = "all", count: Int = 0, desc: Bool = false)->URL{
+        var path: String = category == "all" ? "products" : "products/category/\(category)"
+        let prv: Int = path.count
+        if desc {
+            path += "?sort=desc"
+        }
+        if count > 0{
+            path += path.count > prv ? "&" : "?"
+            path += "limit=\(count)"
+        }
+        return finalUrl(path)
+    }
+    
     static func finalUrl(_ endPoint: String)-> URL{
         var urlStr: String = ""
     #if DEBUG

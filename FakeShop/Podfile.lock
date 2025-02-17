@@ -1,20 +1,22 @@
 PODS:
-  - FSPagerView (0.8.3)
+  - ImageSlideshow (1.9.2):
+    - ImageSlideshow/Core (= 1.9.2)
+  - ImageSlideshow/Core (1.9.2)
   - Kingfisher (7.12.0)
 
 DEPENDENCIES:
-  - FSPagerView
+  - ImageSlideshow (~> 1.9.0)
   - Kingfisher (~> 7.0)
 
 SPEC REPOS:
   trunk:
-    - FSPagerView
+    - ImageSlideshow
     - Kingfisher
 
 SPEC CHECKSUMS:
-  FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
+  ImageSlideshow: be305b54eaf2b2cfc7a7141c7c734605d44dc07d
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9
 
-PODFILE CHECKSUM: 17bf33b36539df1567e757e977f50f322dc68c60
+PODFILE CHECKSUM: 6e717b2502a943f3b530e5253fd249c5d5b07ba5
 
 COCOAPODS: 1.15.2

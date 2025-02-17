@@ -36,7 +36,7 @@ extension CategoriesCollectionCell{
         
         [titleLabel].forEach{
             $0.textColor = .primary
-            $0.font = .NanumGothic(type: .Regular, size: 18)
+            $0.font = .NanumGothic(type: .Bold, size: 16)
         }
     }
     

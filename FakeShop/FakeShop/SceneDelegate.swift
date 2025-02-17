@@ -25,9 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        }
 //        window?.rootViewController = (Common.shared.token.count > 0) ? mainVc : UINavigationController(rootViewController: loginVc)
         
-//        window?.rootViewController = UINavigationController(rootViewController: loginVc)
+//        let next = MainVC()
+//        window?.rootViewController = UINavigationController(rootViewController: next)
         window?.rootViewController = mainVc
-//        window?.rootViewController = Test2VC()
         
         window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()

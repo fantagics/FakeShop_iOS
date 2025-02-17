@@ -6,35 +6,42 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MainVC: UIViewController {
     
     private let vm: MainVM = MainVM()
+    private var itemsOfCategory: [[Product]] = []
     
     private lazy var footer: NoticeFooter = NoticeFooter()
     private let mainCollectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout{ (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             //Item
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let itemSize = sectionIndex == 0 ?
+                NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)) :
+                NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/4), heightDimension: .fractionalHeight(1.0))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+            if sectionIndex != 0 {
+                item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+            }
             
             //Group (row)
             let groupSize =
-            NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: sectionIndex == 0 ? NSCollectionLayoutDimension.fractionalWidth(1173/2080) : NSCollectionLayoutDimension.fractionalWidth(1/2))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: sectionIndex == 0 ? 1 : 4)
+            NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: sectionIndex == 0 ? NSCollectionLayoutDimension.fractionalWidth(1173/2080) : NSCollectionLayoutDimension.fractionalWidth(3/7))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             //Section
             let section = NSCollectionLayoutSection(group: group)
-            let sectionInset: CGFloat = sectionIndex == 0 ? 0 : 20
-            section.contentInsets = NSDirectionalEdgeInsets(top: sectionInset, leading: sectionInset, bottom: sectionInset, trailing: sectionInset)
+            section.contentInsets = sectionIndex == 0 ?
+                NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0) :
+                NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 12, trailing: 12)
             section.orthogonalScrollingBehavior = sectionIndex == 0 ? .paging : .continuous
             
             //Header or Footer 공간 확보
             if sectionIndex != 0{
                 section.boundarySupplementaryItems = [
                     NSCollectionLayoutBoundarySupplementaryItem(
-                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(60)),
+                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(46)),
                         elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 ]
             }
@@ -48,6 +55,16 @@ class MainVC: UIViewController {
         super.viewDidLoad()
         
         setup()
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadPreview(_:)), name: Notification.Name("reloadPreviewItems"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCategory(_:)), name: Notification.Name("receiveCategory"), object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    deinit{
+        NotificationCenter.default.removeObserver(self)
     }
     
 }
@@ -59,6 +76,29 @@ class MainVC: UIViewController {
 
 //MARK: - Func
 extension MainVC{
+    private func loadPreviewItems(){
+        print(#function)
+        vm.getPreviewItems()
+    }
+    
+    @objc private func reloadCategory(_ sender: Notification){
+        loadPreviewItems()
+    }
+    @objc private func reloadPreview(_ sender: Notification){
+        print(#function)
+        guard let info: [Product] = sender.userInfo?["pushData"] as? [Product] else{return}
+        if !itemsOfCategory.flatMap{$0}.compactMap{$0}.map{$0.id}.contains(info[0].id){
+            itemsOfCategory.append(info)
+            print("received Section:", itemsOfCategory.count)
+            mainCollectionView.reloadData()
+        }
+    }
+    
+    @objc private func didTapCartButton(_ sender: UIBarButtonItem){
+        itemsOfCategory.removeAll()
+        print(itemsOfCategory.count)
+        mainCollectionView.reloadData()
+    }
 }
 
 //MARK: - inital_UI
@@ -83,8 +123,12 @@ extension MainVC{
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.widthAnchor.constraint(equalTo: logoImageView.heightAnchor, multiplier: 647 / 224).isActive = true
         
-        let cartButton: UIBarButtonItem = UIBarButtonItem()
-        cartButton.image = UIImage(systemName: "cart")
+        let cartButton: UIBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "cart"),
+            style: UIBarButtonItem.Style.plain,
+            target: self,
+            action: #selector(didTapCartButton(_:))
+        )
         self.navigationItem.rightBarButtonItem = cartButton
         self.navigationItem.rightBarButtonItem?.tintColor = .white
     }
@@ -109,7 +153,7 @@ extension MainVC{
         
         NSLayoutConstraint.activate([
             mainCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mainCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            mainCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             mainCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             mainCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
@@ -120,22 +164,38 @@ extension MainVC{
 //MARK: - DataSource&Delegate
 extension MainVC: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return section == 0 ? 1 : (3+1)
+        return section == 0 ? 1 : itemsOfCategory[section - 1].count + 1
+//        return section == 0 ? 1 : 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             guard let cell: BannerCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as? BannerCollectionViewCell else{return UICollectionViewCell()}
-            cell.imageView.image = Common.shared.noticeArr[indexPath.item]
             return cell
         } else {
             guard let cell: RecommendItemCell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendItemCell.identifier, for: indexPath) as? RecommendItemCell else{return UICollectionViewCell()}
+            if indexPath.item == 3 {
+                cell.imageView.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
+                cell.imageView.contentMode = .center
+                cell.imageView.tintColor = .black
+                cell.titleLabel.text = "더 보기"
+                cell.priceLabel.text = ""
+                cell.ratingLabel.text = ""
+            } else {
+                let product: Product = itemsOfCategory[indexPath.section - 1][indexPath.item]
+                cell.imageView.kf.setImage(with: URL(string: product.image))
+                cell.imageView.contentMode = .scaleToFill
+                cell.titleLabel.text = product.title
+                cell.priceLabel.text = product.price.toCurrencyFormat()
+                cell.ratingLabel.text = "⭐️ \(product.rating.rate) / 🛒 \(product.rating.count)"
+            }
             return cell
         }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return itemsOfCategory.count + 1
+//        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -143,11 +203,10 @@ extension MainVC: UICollectionViewDataSource{
               indexPath.section > 0,
               let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RecommendSectionHeader.identifier, for: indexPath) as? RecommendSectionHeader
         else{return UICollectionReusableView()}
-        header.titleLabel.text = "Title"
+        header.titleLabel.text = Translation.language.ko[itemsOfCategory[indexPath.section - 1][0].category]
         return header
     }
 }
 
 extension MainVC: UICollectionViewDelegate{
-    
 }

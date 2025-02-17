@@ -6,27 +6,17 @@
 //
 
 import UIKit
+import ImageSlideshow
 
 class BannerCollectionViewCell: UICollectionViewCell{
     static let identifier: String = String(describing: BannerCollectionViewCell.self)
     
-    let imageView: UIImageView = UIImageView() //-> FSPagerView
+    private var banner: ImageSlideshow = ImageSlideshow()
+    private let pageIndicator: UIPageControl = UIPageControl()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        [imageView].forEach{
-            $0.backgroundColor = .gray
-            $0.contentMode = .scaleAspectFit
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview($0)
-        }
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: self.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-        ])
+        setViewConfig()
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +24,39 @@ class BannerCollectionViewCell: UICollectionViewCell{
     }
 }
 
-#Preview("MainVC"){
-    return UINavigationController(rootViewController: MainVC())
+//MARK: - SETUP
+extension BannerCollectionViewCell{
+    private func setViewConfig(){
+        setAttribute()
+        setUI()
+    }
     
+    private func setAttribute(){
+        [pageIndicator].forEach{
+            $0.currentPageIndicatorTintColor = .primary
+            $0.pageIndicatorTintColor = .gray
+            $0.numberOfPages = Common.shared.noticeArr.count
+        }
+        
+        [banner].forEach{
+            $0.setImageInputs(Common.shared.noticeArr.map{ImageSource(image: $0)})
+            $0.slideshowInterval = 3
+            $0.isUserInteractionEnabled = true
+            $0.pageIndicator = pageIndicator
+        }
+    }
+    
+    private func setUI(){
+        [banner].forEach{
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
+        }
+        
+        NSLayoutConstraint.activate([
+            banner.topAnchor.constraint(equalTo: self.topAnchor),
+            banner.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            banner.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            banner.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        ])
+    }
 }

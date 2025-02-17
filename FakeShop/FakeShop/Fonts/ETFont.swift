@@ -21,9 +21,9 @@ enum NanumGothicType{
     
     var name: String{
         switch self{
-        case .Regular: return "NanumGothic-Regular"
-        case .Bold: return "NanumGothic-Bold"
-        case .ExtraBold: return "NanumGothic-ExtraBold"
+        case .Regular: return "NanumGothic"
+        case .Bold: return "NanumGothicBold"
+        case .ExtraBold: return "NanumGothicExtraBold"
         }
     }
 }

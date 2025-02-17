@@ -6,10 +6,10 @@
 ////
 //
 ////pageControl을 배너 이미지 위에 올리고자 한다면
-////i) TableView안에 CollectioView를  넣어주거나
-////ii) ScrollView 안에 CollectionView 2개를 넣어주는데,
-////    아래 CollectionView 사이즈를 내부 아이템 전체 높이 이상으롤 하여 더블스크롤을 막아줘야한다.
-///iii) 현재는 NotificationCenter 혹은 RxSwift및Combine 필요
+////i) Cell안에 CollectioView를  넣어주거나
+////ii) NotificationCenter 혹은 RxSwift및Combine 필요
+////https://applecider2020.tistory.com/42
+////iii)복제된 VC는 Sandbox 옵션이 꺼져있는 상태임(ImageSliderShow사용)
 //
 //import UIKit
 //
