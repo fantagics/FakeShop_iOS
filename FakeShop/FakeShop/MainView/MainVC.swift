@@ -69,15 +69,13 @@ class MainVC: UIViewController {
     
 }
 
-#Preview("MainVC"){
-    return UINavigationController(rootViewController: MainVC())
-    
-}
+//#Preview("MainVC"){
+//    return UINavigationController(rootViewController: MainVC())
+//}
 
 //MARK: - Func
 extension MainVC{
     private func loadPreviewItems(){
-        print(#function)
         vm.getPreviewItems()
     }
     
@@ -85,19 +83,15 @@ extension MainVC{
         loadPreviewItems()
     }
     @objc private func reloadPreview(_ sender: Notification){
-        print(#function)
         guard let info: [Product] = sender.userInfo?["pushData"] as? [Product] else{return}
-        if !itemsOfCategory.flatMap{$0}.compactMap{$0}.map{$0.id}.contains(info[0].id){
+        if !itemsOfCategory.flatMap({$0}).compactMap({$0}).map({$0.id}).contains(info[0].id){
             itemsOfCategory.append(info)
-            print("received Section:", itemsOfCategory.count)
             mainCollectionView.reloadData()
         }
     }
     
     @objc private func didTapCartButton(_ sender: UIBarButtonItem){
-        itemsOfCategory.removeAll()
-        print(itemsOfCategory.count)
-        mainCollectionView.reloadData()
+        print("Cart Page")
     }
 }
 
@@ -153,7 +147,7 @@ extension MainVC{
         
         NSLayoutConstraint.activate([
             mainCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mainCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mainCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             mainCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             mainCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])

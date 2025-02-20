@@ -43,7 +43,6 @@ class ProductRequest{
                 print("Request Fail:", err.localizedDescription)
                 completion(.failure(err))
             }
-            
         }
     }
     

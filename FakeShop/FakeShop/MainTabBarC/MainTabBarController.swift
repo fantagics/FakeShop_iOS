@@ -107,6 +107,14 @@ extension MainTabBarController{
         self.tabBar.unselectedItemTintColor = .lightGray
         self.tabBar.layer.cornerRadius = 16
         self.tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        if #available(iOS 15.0, *){
+            let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = .primary
+            self.tabBar.standardAppearance = tabBarAppearance
+            self.tabBar.scrollEdgeAppearance = tabBarAppearance
+        }
     }
     
     private func setSideMenu(){
