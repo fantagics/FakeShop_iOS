@@ -21,3 +21,15 @@ struct Rating: Codable{
     let rate: Double
     let count: Int
 }
+
+enum Purchase{
+    case buy
+    case cart
+    
+    var str: String{
+        switch self{
+        case .buy: return "buy"
+        case .cart: return "cart"
+        }
+    }
+}

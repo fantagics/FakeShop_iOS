@@ -11,11 +11,12 @@ extension Double{
     func toCurrencyFormat()-> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "en_US")
         formatter.maximumFractionDigits = 2
-        formatter.minimumSignificantDigits = 2
-        guard let price = formatter.string(for: self)else{
+        guard var price = formatter.string(for: self)else{
             return "Formatter Error"
         }
+        price.insert(" ", at: price.index(price.startIndex, offsetBy: 1))
         return price
     }
 }

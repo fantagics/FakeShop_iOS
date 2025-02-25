@@ -72,6 +72,9 @@ class MainVC: UIViewController {
 //#Preview("MainVC"){
 //    return UINavigationController(rootViewController: MainVC())
 //}
+#Preview("MainTabBarController"){
+    return MainTabBarController()
+}
 
 //MARK: - Func
 extension MainVC{
@@ -203,4 +206,17 @@ extension MainVC: UICollectionViewDataSource{
 }
 
 extension MainVC: UICollectionViewDelegate{
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section != 0 {
+            if indexPath.item == 3{
+                
+            } else {
+                let nextVC: ProductInfoVC = ProductInfoVC()
+                nextVC.product = itemsOfCategory[indexPath.section - 1][indexPath.item]
+                self.navigationItem.backButtonDisplayMode = .minimal
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            }
+        }
+    }
 }

@@ -6,13 +6,13 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ProductInfoVC: UIViewController {
     
-    private let scrollView: UIScrollView = UIScrollView()
-    private let contents: UIView = UIView()
-    private let imageView: UIImageView = UIImageView()
-    private let bottomBar: UIView = UIView()
+    var product: Product?
+    private let productInfoTable: UITableView = UITableView()
+    private let bottomBar: PurchaseBottomBar = PurchaseBottomBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,9 @@ class ProductInfoVC: UIViewController {
 }
 
 #Preview("ProductInfoVC"){
-    return UINavigationController(rootViewController: ProductInfoVC())
+    let vc = ProductInfoVC()
+    vc.product = Common.shared.dummyProduct
+    return UINavigationController(rootViewController: vc)
 }
 
 //MARK: - Function
@@ -53,38 +55,89 @@ extension ProductInfoVC{
     }
     
     private func setAttribute(){
+        view.backgroundColor = .white
+        self.navigationController?.navigationBar.tintColor = .white
+        
+        [productInfoTable].forEach{
+            $0.dataSource = self
+            $0.register(ProductImageTableCell.self, forCellReuseIdentifier: ProductImageTableCell.identifier)
+            $0.register(ProductInfoTableCell.self, forCellReuseIdentifier: ProductInfoTableCell.identifier)
+            $0.register(ProductDescTextTableCell.self, forCellReuseIdentifier: ProductDescTextTableCell.identifier)
+            $0.separatorStyle = .none
+            $0.bounces = false
+        }
+        
         [bottomBar].forEach{
-            $0.backgroundColor = .primary
+            $0.delegate = self
         }
     }
     
     private func setUI(){
-        contents.backgroundColor = .orange
-        contents.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(contents)
-        
-        [scrollView, bottomBar].forEach{
+        [productInfoTable, bottomBar].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bottomBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomBar.heightAnchor.constraint(equalToConstant: 100),
             
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
+            productInfoTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            productInfoTable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            productInfoTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            productInfoTable.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
             
-            contents.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contents.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contents.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contents.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contents.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            contents.heightAnchor.constraint(equalToConstant: 1000),
         ])
+    }
+}
+
+//MARK: - DataSource & Delegate
+extension ProductInfoVC: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0{
+            guard let cell: ProductImageTableCell = tableView.dequeueReusableCell(withIdentifier: ProductImageTableCell.identifier, for: indexPath) as? ProductImageTableCell else{return UITableViewCell()}
+            
+            guard let url = product?.image else{return cell}
+            cell.image.kf.setImage(with: URL(string: url))
+            cell.selectionStyle = .none
+            
+            return cell
+        } else if indexPath.row == 1{
+            guard let cell: ProductInfoTableCell = tableView.dequeueReusableCell(withIdentifier: ProductInfoTableCell.identifier, for: indexPath) as? ProductInfoTableCell else{return UITableViewCell()}
+            
+            cell.selectionStyle = .none
+            guard let prod = product else{return cell}
+            cell.category.text = Translation.language.ko[prod.category]
+            cell.title.text = prod.title
+            cell.setRatingStar(rate: prod.rating.rate)
+            cell.ratingCount.text = "(\(prod.rating.count))"
+            cell.price.text = prod.price.toCurrencyFormat()
+            
+            return cell
+        } else{
+            guard let cell: ProductDescTextTableCell = tableView.dequeueReusableCell(withIdentifier: ProductDescTextTableCell.identifier, for: indexPath) as? ProductDescTextTableCell else{return UITableViewCell()}
+            
+            cell.selectionStyle = .none
+            cell.desc.text = product?.description ?? ""
+            
+            return cell
+        }
+    }
+    
+}
+
+
+extension ProductInfoVC: PurchaseBottomBarDelegate{
+    func showbottomSheet(type: Purchase) {
+        let alertSheet: PurchaseBottomSheetVC = PurchaseBottomSheetVC()
+        alertSheet.product = product
+        alertSheet.viewType = type
+        alertSheet.modalPresentationStyle = .overFullScreen
+        self.present(alertSheet, animated: true)
     }
 }
