@@ -7,11 +7,10 @@
 
 import UIKit
 
-class PurchaseActionSheet: UIView {
+class PurchaseBottomSheet: UIView {
     
-    private var product: Product
-    private var type: Purchase
-    
+    private var itemPrice: Double = 0
+    private var itemCount: Int = 1
     private let titleLabel: UILabel = UILabel()
     private let priceLabel: UILabel = UILabel()
     private let countView: UIView = UIView()
@@ -21,10 +20,8 @@ class PurchaseActionSheet: UIView {
     private let countMinusButton: UIButton = UIButton()
     private let submitButton: UIButton = UIButton()
     
-    required init(_ product: Product, _ type: Purchase){
-        self.product = product
-        self.type = type
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
     }
     
@@ -40,32 +37,47 @@ class PurchaseActionSheet: UIView {
 }
 
 //MARK: - Function
-extension PurchaseActionSheet{
+extension PurchaseBottomSheet{
+    func resetUI(product: Product, type: Purchase){
+        titleLabel.text = product.title
+        itemPrice = product.price
+        priceLabel.text = itemPrice.toCurrencyFormat()
+        submitButton.setTitle(Translation.language.ko[type.str], for: .normal)
+        itemCount = 1
+        countLabel.text = "\(itemCount)"
+    }
     
+    @objc private func didTapCountButton(_ sender: UIButton){
+        if sender == countPlusButton{
+            guard itemCount < 999 else{return}
+            itemCount += 1
+        } else if sender == countMinusButton{
+            guard itemCount > 1 else{return}
+            itemCount -= 1
+        }
+        countLabel.text = "\(itemCount)"
+        priceLabel.text = (itemPrice * Double(itemCount)).toCurrencyFormat()
+    }
 }
 
 //MARK: - SETUP
-extension PurchaseActionSheet{
+extension PurchaseBottomSheet{
     private func setup(){
         setAttribute()
         setUI()
     }
     
     private func setAttribute(){
-        let item = product ?? Common.shared.dummyProduct
-        
         [self].forEach{
             $0.backgroundColor = .white
             $0.layer.cornerRadius = 32
             $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
         [titleLabel].forEach{
-            $0.text = item.title
             $0.numberOfLines = 1
             $0.font = .NanumGothic(type: .Bold, size: 24)
         }
         [priceLabel].forEach{
-            $0.text = item.price.toCurrencyFormat()
             $0.textColor = .primary
             $0.font = .NanumGothic(type: .Bold, size: 24)
         }
@@ -81,18 +93,19 @@ extension PurchaseActionSheet{
             $0.font = .NanumGothic(type: .Bold, size: 24)
             $0.textColor = .primary
             $0.textAlignment = .center
-            $0.text = "0"
+            $0.text = "\(itemCount)"
         }
         countMinusButton.setImage(UIImage(systemName: "minus"), for: .normal)
         countPlusButton.setImage(UIImage(systemName: "plus"), for: .normal)
         [countMinusButton, countPlusButton].forEach{
             $0.tintColor = .white
+            $0.addTarget(self, action: #selector(didTapCountButton(_:)), for: .touchUpInside)
         }
         [submitButton].forEach{
             $0.backgroundColor = .primary
+            $0.tintColor = .white
             $0.layer.cornerRadius = 16
             $0.titleLabel?.font = .NanumGothic(type: .Bold, size: 24)
-            $0.setTitle(Translation.language.ko[type.str], for: .normal)
         }
     }
     //UI

@@ -27,6 +27,7 @@ class Translation{  //-> json
         //etc
         "more" : "더 보기",
         "buy" : "구매하기",
+        "error" : "오류",
     ]
     
 //    let type: [String:[String:String]] = [

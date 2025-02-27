@@ -25,11 +25,13 @@ struct Rating: Codable{
 enum Purchase{
     case buy
     case cart
+    case none
     
     var str: String{
         switch self{
         case .buy: return "buy"
         case .cart: return "cart"
+        case .none: return "error"
         }
     }
 }

@@ -13,6 +13,9 @@ class ProductInfoVC: UIViewController {
     var product: Product?
     private let productInfoTable: UITableView = UITableView()
     private let bottomBar: PurchaseBottomBar = PurchaseBottomBar()
+    private let dismissView: UIView = UIView()
+    private var bottomSheet: PurchaseBottomSheet = PurchaseBottomSheet()
+    private var bottomSheetTopAnchor: NSLayoutConstraint = NSLayoutConstraint()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +33,14 @@ class ProductInfoVC: UIViewController {
 
 //MARK: - Function
 extension ProductInfoVC{
-    
+    @objc private func didTapGesture(_ sender: UITapGestureRecognizer){
+        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+            self.dismissView.backgroundColor = .black.withAlphaComponent(0)
+            self.dismissView.isHidden = true
+            self.bottomSheetTopAnchor.constant = 100
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
 }
 
 //MARK: - SETUP
@@ -70,10 +80,15 @@ extension ProductInfoVC{
         [bottomBar].forEach{
             $0.delegate = self
         }
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapGesture(_:)))
+        dismissView.addGestureRecognizer(tapGesture)
+        dismissView.backgroundColor = .black.withAlphaComponent(0)
+        dismissView.isHidden = true
+        bottomSheetTopAnchor = bottomSheet.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 100) //-250
     }
     
     private func setUI(){
-        [productInfoTable, bottomBar].forEach{
+        [productInfoTable, bottomBar, dismissView, bottomSheet].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -88,6 +103,14 @@ extension ProductInfoVC{
             productInfoTable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             productInfoTable.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
             
+            dismissView.topAnchor.constraint(equalTo: view.topAnchor),
+            dismissView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dismissView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            dismissView.bottomAnchor.constraint(equalTo: bottomSheet.topAnchor, constant: 32),
+            
+            bottomSheetTopAnchor,
+            bottomSheet.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomSheet.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
 }
@@ -131,13 +154,15 @@ extension ProductInfoVC: UITableViewDataSource{
     
 }
 
-
 extension ProductInfoVC: PurchaseBottomBarDelegate{
     func showbottomSheet(type: Purchase) {
-        let alertSheet: PurchaseBottomSheetVC = PurchaseBottomSheetVC()
-        alertSheet.product = product
-        alertSheet.viewType = type
-        alertSheet.modalPresentationStyle = .overFullScreen
-        self.present(alertSheet, animated: true)
+        self.bottomSheet.resetUI(product: self.product ?? Common.shared.dummyProduct, type: type)
+        UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+            self.dismissView.isHidden = false
+            self.dismissView.backgroundColor = .black.withAlphaComponent(0.2)
+            self.bottomSheetTopAnchor.constant = -250
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 }
+
