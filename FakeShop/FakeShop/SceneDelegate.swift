@@ -26,8 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        window?.rootViewController = (Common.shared.token.count > 0) ? mainVc : UINavigationController(rootViewController: loginVc)
         
 //        let next = MainVC()
-//        window?.rootViewController = UINavigationController(rootViewController: next)
-        window?.rootViewController = mainVc
+        window?.rootViewController = UINavigationController(rootViewController: SearchProductsVC())
+//        window?.rootViewController = mainVc
         
         window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()

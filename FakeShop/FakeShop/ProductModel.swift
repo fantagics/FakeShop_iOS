@@ -35,3 +35,22 @@ enum Purchase{
         }
     }
 }
+
+enum SortType{
+    case recent //$0.id > $1.id
+    case highPrice
+    case lowPrice
+    case rating
+    case sellCount
+    
+    var str: String{
+        switch self{
+        case .recent: return "Newest Arrivals"
+        case .highPrice: return "Price: High To Low"
+        case .lowPrice: return "Price: Low to High"
+        case .rating: return "Avg. Customer Review"
+        case .sellCount: return "Best Sellers"
+        }
+    }
+}
+

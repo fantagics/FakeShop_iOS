@@ -9,7 +9,9 @@ import UIKit
 
 class Test1VC: UIViewController {
     
+    var vm: TestVM = TestVM()
     private let btn1: UIButton = UIButton()
+    private let lb1: UILabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +28,10 @@ class Test1VC: UIViewController {
 //MARK: - Function
 extension Test1VC{
     @objc func didTapButton(_ sender: UIButton){
-        let nextvc = Test2VC()
-        self.navigationController?.pushViewController(nextvc, animated: true)
+//        let nextvc = Test2VC()
+//        self.navigationController?.pushViewController(nextvc, animated: true)
+        vm.addCount()
+        lb1.text = "\(vm.count)"
     }
 }
 
@@ -48,10 +52,16 @@ extension Test1VC{
             $0.setTitleColor(.blue, for: .normal)
             $0.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         }
+        
+        [lb1].forEach{
+            $0.font = .boldSystemFont(ofSize: 30)
+            $0.textColor = .green
+            $0.text = "\(vm.count)"
+        }
     }
     
     private func setUI(){
-        [btn1].forEach{
+        [btn1, lb1].forEach{
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -59,6 +69,16 @@ extension Test1VC{
         NSLayoutConstraint.activate([
             btn1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             btn1.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            lb1.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lb1.bottomAnchor.constraint(equalTo: btn1.topAnchor, constant: -16)
         ])
+    }
+}
+
+class TestVM{
+    var count: Int = 0
+    
+    func addCount(){
+        self.count += 1
     }
 }

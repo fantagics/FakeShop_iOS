@@ -24,6 +24,12 @@ class Translation{  //-> json
         "cart" : "장바구니",
         "inquiryHistory" : "문의내역",
         "logout" : "로그아웃",
+        //sort
+        "Newest Arrivals" : "신규 상품순",
+        "Price: High To Low" : "높은 가격순",
+        "Price: Low to High" : "낮은 가격순",
+        "Avg. Customer Review" : "평점 높은순",
+        "Best Sellers" : "판매 인기순",
         //etc
         "more" : "더 보기",
         "buy" : "구매하기",
