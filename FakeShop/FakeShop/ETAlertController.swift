@@ -42,6 +42,7 @@ extension UIAlertController{
         let confirm: UIAlertAction = UIAlertAction(title: Translation.language.ko["Apply"], style: .cancel){_ in
             completion()
         }
+        confirm.setValue(UIColor.primary, forKey: "titleTextColor")
         alertController.addAction(confirm)
         
         return alertController

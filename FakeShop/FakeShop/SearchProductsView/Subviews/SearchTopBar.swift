@@ -35,8 +35,8 @@ extension SearchTopBar{
     }
     @objc func didTapButton(_ sender: UIButton){
         if sender == searchButton{
-            self.endEditing(true)
             delegate?.didTapSearchButton(searchText: searchField.text ?? "")
+            self.endEditing(true)
         } else if sender == sortButton{
             delegate?.didTapSortButton()
         }
@@ -116,8 +116,8 @@ extension SearchTopBar{
 
 extension SearchTopBar: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
         delegate?.didTapSearchButton(searchText: searchField.text ?? "")
+        textField.resignFirstResponder()
         return true
     }
 }

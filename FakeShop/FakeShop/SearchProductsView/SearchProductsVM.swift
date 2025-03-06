@@ -18,11 +18,13 @@ class SearchProductsVM{
     let paginationCount = 8
     var showCount: Int = 0
     
-    func getProducts(category: String){ //Changed Category
+    func getProducts(category: String, completion: (()-> ())?){ //Changed Category
         ProductRequest.products(category: category){ res in
             switch res{
             case .success(let data):
                 self.receivedProducts = data
+                self.sortProducts()
+                (completion ?? {})()
             case .failure(let err):
                 print("Error: getCategories:", err.localizedDescription)
             }
@@ -32,8 +34,8 @@ class SearchProductsVM{
     func sortProducts(){
         if prevSearchText != searchText{
             prevSearchText = searchText
-            filteredProducts = searchText.count > 0 ? receivedProducts.filter{ $0.title.contains(searchText) } : receivedProducts
-        } else {//if searchText.count == 0 {
+            filteredProducts = searchText.count > 0 ? receivedProducts.filter{ $0.title.lowercased().contains(searchText) } : receivedProducts
+        } else if searchText.count == 0 {
             filteredProducts = receivedProducts
         }
         

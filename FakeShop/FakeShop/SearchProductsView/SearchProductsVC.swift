@@ -53,18 +53,14 @@ class SearchProductsVC: UIViewController {
 //MARK: - Function
 extension SearchProductsVC{
     private func initProducts(){
-        vm.getProducts(category: self.category)
-        vm.sortProducts()
-        productCollectionView.reloadData()
+        vm.getProducts(category: self.category){
+            self.productCollectionView.reloadData()
+        }
     }
     
     @objc private func didTapCartButton(_ sender: UIBarButtonItem){
         print("CART")
-        print(Common.shared.categories)
-        print("REC: \(vm.receivedProducts.count)")
-        print("FIT: \(vm.filteredProducts.count)")
-        print("SOR: \(vm.sortedProducts.count)")
-        productCollectionView.reloadData()
+        print("C:", categoryPicker.subviews.count)
     }
     
     @objc private func didTapBackButton(_ sender: UIBarButtonItem){
@@ -178,19 +174,22 @@ extension SearchProductsVC: CategoryTitleViewDelegate{
         guard let prevIdx: Int = Common.shared.categories.firstIndex(of: self.category) else{return}
         let alert: UIAlertController = UIAlertController.pickerViewActionSheet(prev: prevIdx, title: Translation.language.ko["Category"], picker: categoryPicker, completion: {
             let selected: Int = self.categoryPicker.selectedRow(inComponent: 0)
+            guard self.category != Common.shared.categories[selected] else{return}
             self.category = Common.shared.categories[selected]
             self.titleView.setTitle(category: self.category)
-            self.vm.getProducts(category: self.category)
-            self.vm.sortProducts()
-            self.productCollectionView.reloadData()
+            self.vm.getProducts(category: self.category){
+                self.productCollectionView.reloadData()
+            }
+            
         })
         self.present(alert, animated: true)
+        categoryPicker.subviews[1].backgroundColor = .primary.withAlphaComponent(0.3)
     }
 }
 
 extension SearchProductsVC: SearchTopBarDelegate{
     func didTapSearchButton(searchText: String) {
-        self.vm.searchText = searchText
+        self.vm.searchText = searchText.lowercased()
         self.vm.sortProducts()
         self.productCollectionView.reloadData()
     }
@@ -198,11 +197,13 @@ extension SearchProductsVC: SearchTopBarDelegate{
     func didTapSortButton() {
         let prevIdx: Int = self.vm.sortType.rawValue
         let alert: UIAlertController = UIAlertController.pickerViewActionSheet(prev: prevIdx, title: Translation.language.ko["Sort by"], picker: sortTypePicker, completion: {
+            guard  self.vm.sortType != SortType(rawValue: self.sortTypePicker.selectedRow(inComponent: 0)) else{return}
             self.vm.sortType = SortType(rawValue: self.sortTypePicker.selectedRow(inComponent: 0)) ?? .recent
             self.vm.sortProducts()
             self.productCollectionView.reloadData()
         })
         self.present(alert, animated: true)
+        sortTypePicker.subviews[1].backgroundColor = .primary.withAlphaComponent(0.3)
     }
 }
 
