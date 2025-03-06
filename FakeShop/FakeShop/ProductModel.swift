@@ -36,7 +36,7 @@ enum Purchase{
     }
 }
 
-enum SortType{
+enum SortType: Int, CaseIterable{
     case recent //$0.id > $1.id
     case highPrice
     case lowPrice

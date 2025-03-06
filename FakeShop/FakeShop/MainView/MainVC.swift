@@ -210,7 +210,11 @@ extension MainVC: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section != 0 {
             if indexPath.item == 3{
-                
+                let nextvc: SearchProductsVC = SearchProductsVC()
+                nextvc.category = itemsOfCategory[indexPath.section - 1][0].category
+                let nextnvc: UINavigationController = UINavigationController(rootViewController: nextvc)
+                nextnvc.modalPresentationStyle = .fullScreen
+                self.present(nextnvc, animated: false)
             } else {
                 let nextVC: ProductInfoVC = ProductInfoVC()
                 nextVC.product = itemsOfCategory[indexPath.section - 1][indexPath.item]

@@ -9,7 +9,6 @@ import UIKit
 
 class MainTabBarController: UITabBarController{
     
-//    private let vm: MainVM = MainVM()
     private let sideWidth: CGFloat = 200
     private var isSideMenuVisable = false
     private let sideMenuBackView: UIView = UIView()
@@ -122,6 +121,7 @@ extension MainTabBarController{
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.layer.cornerRadius = 20
             $0.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            $0.delegate = self
         }
         [sideMenuBackView].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -161,3 +161,12 @@ extension MainTabBarController: UITabBarControllerDelegate{
     }
 }
 
+extension MainTabBarController: SideMenuViewDelegate{
+    func presentNextVC(category: String) {
+        let nextvc: SearchProductsVC = SearchProductsVC()
+        nextvc.category = category
+        let nextnvc: UINavigationController = UINavigationController(rootViewController: nextvc)
+        nextnvc.modalPresentationStyle = .fullScreen
+        self.present(nextnvc, animated: false)
+    }
+}

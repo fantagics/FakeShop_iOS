@@ -8,6 +8,8 @@
 import UIKit
 
 class SearchTopBar: UIView {
+    var delegate: SearchTopBarDelegate?
+    
     private let searchField: UITextField = UITextField()
     private let searchButton: UIButton = UIButton()
     private let sortButton: UIButton = UIButton()
@@ -28,7 +30,17 @@ class SearchTopBar: UIView {
 
 //MARK: - Function
 extension SearchTopBar{
-    
+    @objc func doneBtnClicked(_ sender: UIBarButtonItem){
+        self.endEditing(true)
+    }
+    @objc func didTapButton(_ sender: UIButton){
+        if sender == searchButton{
+            self.endEditing(true)
+            delegate?.didTapSearchButton(searchText: searchField.text ?? "")
+        } else if sender == sortButton{
+            delegate?.didTapSortButton()
+        }
+    }
 }
 
 //MARK: - SETUP
@@ -41,6 +53,13 @@ extension SearchTopBar{
     private func setAttribute(){
         self.backgroundColor = .primary
         
+//        let keyboardToolbar = UIToolbar()
+//        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        let doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.doneBtnClicked))
+//        keyboardToolbar.items = [flexBarButton, doneBarButton]
+//        keyboardToolbar.sizeToFit()
+//        keyboardToolbar.tintColor = UIColor.systemGray
+        
         [searchField].forEach{
             $0.addLeftPadding(16)
             $0.clearButtonMode = .always
@@ -51,6 +70,10 @@ extension SearchTopBar{
             $0.backgroundColor = .white
             $0.textColor = .black
             $0.placeholder = "제품명을 입력해주세요."
+            
+//            $0.inputAccessoryView = keyboardToolbar
+            $0.returnKeyType = .done
+            $0.delegate = self
         }
         
         [sortButton, searchButton].forEach{
@@ -59,6 +82,7 @@ extension SearchTopBar{
             $0.layer.cornerRadius = 20
             $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor.darkGray.cgColor
+            $0.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         }
         sortButton.setImage(UIImage(systemName: "line.3.horizontal.decrease", withConfiguration: UIImage.SymbolConfiguration(pointSize: 22)), for: .normal)
         searchButton.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20)), for: .normal)
@@ -87,4 +111,18 @@ extension SearchTopBar{
             searchField.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
         ])
     }
+}
+
+
+extension SearchTopBar: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        delegate?.didTapSearchButton(searchText: searchField.text ?? "")
+        return true
+    }
+}
+
+protocol SearchTopBarDelegate{
+    func didTapSearchButton(searchText: String)
+    func didTapSortButton()
 }

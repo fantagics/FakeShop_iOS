@@ -30,4 +30,20 @@ extension UIAlertController{
         return alertController
     }
     
+    //Custom
+    static func pickerViewActionSheet(prev: Int, title: String?, picker: UIPickerView, completion: @escaping ()->())-> UIAlertController{
+        picker.selectRow(prev, inComponent: 0, animated: true)
+        let alertController: UIAlertController = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        
+        let vc: UIViewController =  UIViewController()
+        vc.view = picker
+        alertController.setValue(vc, forKey: "contentViewController")
+        
+        let confirm: UIAlertAction = UIAlertAction(title: Translation.language.ko["Apply"], style: .cancel){_ in
+            completion()
+        }
+        alertController.addAction(confirm)
+        
+        return alertController
+    }
 }

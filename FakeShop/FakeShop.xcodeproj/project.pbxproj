@@ -77,6 +77,7 @@
 		B6F907B62D7303360014C0C9 /* SearchTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F907B52D7303360014C0C9 /* SearchTopBar.swift */; };
 		B6F907B82D7303820014C0C9 /* ProductCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F907B72D7303820014C0C9 /* ProductCollectionCell.swift */; };
 		B6F907BA2D7639730014C0C9 /* SearchProductsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F907B92D7639730014C0C9 /* SearchProductsVM.swift */; };
+		B6F907BE2D789A650014C0C9 /* PickerViewForActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F907BD2D789A650014C0C9 /* PickerViewForActionSheet.swift */; };
 		EFF96090D21D4400007B8DD0 /* Pods_FakeShopTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0F0F5F019C23CEB51B625FD /* Pods_FakeShopTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +168,7 @@
 		B6F907B52D7303360014C0C9 /* SearchTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTopBar.swift; sourceTree = "<group>"; };
 		B6F907B72D7303820014C0C9 /* ProductCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionCell.swift; sourceTree = "<group>"; };
 		B6F907B92D7639730014C0C9 /* SearchProductsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchProductsVM.swift; sourceTree = "<group>"; };
+		B6F907BD2D789A650014C0C9 /* PickerViewForActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewForActionSheet.swift; sourceTree = "<group>"; };
 		B8200D7FF7E1E64EC3B87D3C /* Pods-FakeShop-FakeShopUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeShop-FakeShopUITests.release.xcconfig"; path = "Target Support Files/Pods-FakeShop-FakeShopUITests/Pods-FakeShop-FakeShopUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C0F0F5F019C23CEB51B625FD /* Pods_FakeShopTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeShopTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD4AB72B79AF35EC63D8DBC /* Pods-FakeShopTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeShopTests.debug.xcconfig"; path = "Target Support Files/Pods-FakeShopTests/Pods-FakeShopTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -519,6 +521,7 @@
 				B6F907B32D7303250014C0C9 /* CategoryTitleView.swift */,
 				B6F907B52D7303360014C0C9 /* SearchTopBar.swift */,
 				B6F907B72D7303820014C0C9 /* ProductCollectionCell.swift */,
+				B6F907BD2D789A650014C0C9 /* PickerViewForActionSheet.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -789,6 +792,7 @@
 				B6F3C0492C5EBCC800F5873C /* ETTextField.swift in Sources */,
 				B665D07D2D38380A00E84C9D /* AuthModel.swift in Sources */,
 				B6F907B42D7303250014C0C9 /* CategoryTitleView.swift in Sources */,
+				B6F907BE2D789A650014C0C9 /* PickerViewForActionSheet.swift in Sources */,
 				B6748A4F2D5A004E001E3090 /* NoticeImageCell_later.swift in Sources */,
 				B665D0852D39563400E84C9D /* Common.swift in Sources */,
 				B6748A4D2D5914A5001E3090 /* RecommendSectionHeader.swift in Sources */,

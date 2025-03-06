@@ -14,6 +14,7 @@ class Translation{  //-> json
     var ko: [String:String] = [
         "":"",
         //category
+        "Category" : "카테고리",
         "all" : "전체",
         "electronics" : "디지털",
         "jewelery" : "브랜드 쥬얼리",
@@ -34,6 +35,8 @@ class Translation{  //-> json
         "more" : "더 보기",
         "buy" : "구매하기",
         "error" : "오류",
+        "Apply" : "적용하기",
+        "Sort by" : "정렬기준",
     ]
     
 //    let type: [String:[String:String]] = [

@@ -88,7 +88,9 @@ extension ProductInfoVC{
     }
     
     private func setUI(){
-        [productInfoTable, bottomBar, dismissView, bottomSheet].forEach{
+        let bottomUnsafeArea: UIView = UIView()
+        bottomUnsafeArea.backgroundColor = .primary
+        [bottomUnsafeArea, productInfoTable, bottomBar, dismissView, bottomSheet].forEach{
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -111,6 +113,11 @@ extension ProductInfoVC{
             bottomSheetTopAnchor,
             bottomSheet.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomSheet.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            bottomUnsafeArea.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            bottomUnsafeArea.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bottomUnsafeArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomUnsafeArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
     }
 }

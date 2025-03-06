@@ -8,14 +8,13 @@
 import UIKit
 
 class CategoryTitleView: UIView {
-    var delegate: CategoryTitleLabelDelegate?
+    var delegate: CategoryTitleViewDelegate?
     
     private let titleLabel: UILabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setViewConfig()
-        setTitle(category: "a")
     }
     
     required init?(coder: NSCoder) {
@@ -69,6 +68,6 @@ extension CategoryTitleView{
     }
 }
 
-protocol CategoryTitleLabelDelegate{
+protocol CategoryTitleViewDelegate{
     func didTapTitle()
 }

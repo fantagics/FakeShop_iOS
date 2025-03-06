@@ -8,7 +8,7 @@
 import UIKit
 
 class SideMenuView: UIView{
-    
+    var delegate: SideMenuViewDelegate?
     private let vm: MainVM = MainVM()
     
     private let titleLabel: UILabel = UILabel()
@@ -73,7 +73,7 @@ extension SideMenuView{
         self.backgroundColor = .primary
         
         [titleLabel].forEach{
-            $0.text = "카테고리"
+            $0.text = Translation.language.ko["Category"]
             $0.textColor = .white
             $0.font = .NanumGothic(type: .ExtraBold, size: 20)
         }
@@ -125,6 +125,10 @@ extension SideMenuView: UICollectionViewDataSource{
 }
 extension SideMenuView: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        Common.shared.categories[indexPath.item]
+        delegate?.presentNextVC(category: Common.shared.categories[indexPath.item])
     }
+}
+
+protocol SideMenuViewDelegate{
+    func presentNextVC(category: String)
 }
