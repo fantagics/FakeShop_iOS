@@ -82,7 +82,6 @@ extension ProductCollectionCell{
             preview.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             preview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
             preview.widthAnchor.constraint(equalTo: preview.heightAnchor),
-//            preview.heightAnchor.constraint(equalToConstant: ),
             
             labelStack.topAnchor.constraint(equalTo: preview.bottomAnchor, constant: 16),
             labelStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),

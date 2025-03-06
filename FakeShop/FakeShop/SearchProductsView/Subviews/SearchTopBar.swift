@@ -53,13 +53,6 @@ extension SearchTopBar{
     private func setAttribute(){
         self.backgroundColor = .primary
         
-//        let keyboardToolbar = UIToolbar()
-//        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let doneBarButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.doneBtnClicked))
-//        keyboardToolbar.items = [flexBarButton, doneBarButton]
-//        keyboardToolbar.sizeToFit()
-//        keyboardToolbar.tintColor = UIColor.systemGray
-        
         [searchField].forEach{
             $0.addLeftPadding(16)
             $0.clearButtonMode = .always
@@ -71,7 +64,6 @@ extension SearchTopBar{
             $0.textColor = .black
             $0.placeholder = "제품명을 입력해주세요."
             
-//            $0.inputAccessoryView = keyboardToolbar
             $0.returnKeyType = .done
             $0.delegate = self
         }
