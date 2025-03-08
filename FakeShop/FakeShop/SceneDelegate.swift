@@ -16,17 +16,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-//        let loginVc = LoginVC()
+        let loginVc = LoginVC()
         let mainVc = MainTabBarController()
-//        if let token: String = UserDefaults.standard.string(forKey: "userToken"){
-//            Common.shared.token = token
-//            let loginTypeStr: String = UserDefaults.standard.string(forKey: "loginType") ?? LoginType.none.rawValue
-//            Common.shared.loginType = LoginType(rawValue: loginTypeStr) ?? .none
-//        }
-//        window?.rootViewController = (Common.shared.token.count > 0) ? mainVc : UINavigationController(rootViewController: loginVc)
+        if let token: String = UserDefaults.standard.string(forKey: "userToken"){
+            Common.shared.token = token
+            let loginTypeStr: String = UserDefaults.standard.string(forKey: "loginType") ?? LoginType.none.rawValue
+            Common.shared.loginType = LoginType(rawValue: loginTypeStr) ?? .none
+        }
+        window?.rootViewController = (Common.shared.token.count > 0) ? mainVc : UINavigationController(rootViewController: loginVc)
         
-//        let next = MainVC()
-        window?.rootViewController = UINavigationController(rootViewController: SearchProductsVC())
 //        window?.rootViewController = mainVc
         
         window?.backgroundColor = .systemBackground

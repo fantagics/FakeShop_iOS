@@ -14,7 +14,6 @@ class SearchProductsVM{
     var searchText: String = ""
     var sortedProducts: [Product] = []
     var sortType: SortType = .recent
-    var showProducts: [Product] = []
     let paginationCount = 8
     var showCount: Int = 0
     
@@ -55,6 +54,18 @@ class SearchProductsVM{
         case .sellCount:
             sortedProducts = filteredProducts.sorted(by: { $0.rating.count > $1.rating.count })
             break
+        }
+    }
+    
+    func pagination(isPossible: inout Bool){
+        if sortedProducts.count < showCount + paginationCount {
+            print("\(sortedProducts.count) / \(showCount) + \(paginationCount)")
+            showCount = sortedProducts.count
+            isPossible = false
+            print("Pagination False. count:", showCount)
+        } else{
+            showCount += paginationCount
+            print("showCount:", showCount)
         }
     }
 }

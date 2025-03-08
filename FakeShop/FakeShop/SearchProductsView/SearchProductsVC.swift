@@ -11,6 +11,7 @@ import Kingfisher
 class SearchProductsVC: UIViewController {
     var category: String = "all"
     private let vm: SearchProductsVM = SearchProductsVM()
+    private var isPagination: Bool = true
     
     private let titleView: CategoryTitleView = CategoryTitleView()
     private let searchBar: SearchTopBar = SearchTopBar()
@@ -54,13 +55,14 @@ class SearchProductsVC: UIViewController {
 extension SearchProductsVC{
     private func initProducts(){
         vm.getProducts(category: self.category){
+            self.vm.pagination(isPossible: &self.isPagination)
             self.productCollectionView.reloadData()
+            self.isPagination = true
         }
     }
     
     @objc private func didTapCartButton(_ sender: UIBarButtonItem){
         print("CART")
-        print("C:", categoryPicker.subviews.count)
     }
     
     @objc private func didTapBackButton(_ sender: UIBarButtonItem){
@@ -147,7 +149,7 @@ extension SearchProductsVC{
 //MARK: - Datasource & Delegate
 extension SearchProductsVC: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return vm.sortedProducts.count
+        return vm.showCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -161,11 +163,23 @@ extension SearchProductsVC: UICollectionViewDataSource{
         return cell
     }
 }
+
 extension SearchProductsVC: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextvc: ProductInfoVC = ProductInfoVC()
         nextvc.product = vm.sortedProducts[indexPath.item]
         self.navigationController?.pushViewController(nextvc, animated: true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentMinY: CGFloat = scrollView.contentOffset.y
+        let contentHeight: CGFloat = self.productCollectionView.contentSize.height
+        let collectionViewHeight: CGFloat = self.productCollectionView.frame.size.height
+        if (contentHeight - contentMinY < collectionViewHeight) && isPagination{
+            print("PAGINATION")
+            vm.pagination(isPossible: &isPagination)
+            productCollectionView.reloadData()
+        }
     }
 }
 
@@ -178,7 +192,11 @@ extension SearchProductsVC: CategoryTitleViewDelegate{
             self.category = Common.shared.categories[selected]
             self.titleView.setTitle(category: self.category)
             self.vm.getProducts(category: self.category){
+                self.vm.showCount = 0
+                self.vm.pagination(isPossible: &self.isPagination)
                 self.productCollectionView.reloadData()
+                self.isPagination = true
+                self.productCollectionView.setContentOffset(CGPointMake(0, -self.productCollectionView.contentInset.top), animated: false)
             }
             
         })
@@ -191,7 +209,11 @@ extension SearchProductsVC: SearchTopBarDelegate{
     func didTapSearchButton(searchText: String) {
         self.vm.searchText = searchText.lowercased()
         self.vm.sortProducts()
+        self.vm.showCount = 0
+        self.vm.pagination(isPossible: &self.isPagination)
         self.productCollectionView.reloadData()
+        self.isPagination = true
+        self.productCollectionView.setContentOffset(CGPointMake(0, -self.productCollectionView.contentInset.top), animated: false)
     }
     
     func didTapSortButton() {
@@ -200,7 +222,11 @@ extension SearchProductsVC: SearchTopBarDelegate{
             guard  self.vm.sortType != SortType(rawValue: self.sortTypePicker.selectedRow(inComponent: 0)) else{return}
             self.vm.sortType = SortType(rawValue: self.sortTypePicker.selectedRow(inComponent: 0)) ?? .recent
             self.vm.sortProducts()
+            self.vm.showCount = 0
+            self.vm.pagination(isPossible: &self.isPagination)
             self.productCollectionView.reloadData()
+            self.isPagination = true
+            self.productCollectionView.setContentOffset(CGPointMake(0, -self.productCollectionView.contentInset.top), animated: false)
         })
         self.present(alert, animated: true)
         sortTypePicker.subviews[1].backgroundColor = .primary.withAlphaComponent(0.3)
