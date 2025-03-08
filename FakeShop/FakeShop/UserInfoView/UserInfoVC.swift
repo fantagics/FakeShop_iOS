@@ -112,7 +112,18 @@ extension UserInfoVC: UITableViewDataSource{
 }
 extension UserInfoVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        print(#function)
+        if indexPath.row > 0, SettingMenu(rawValue: indexPath.row - 1) == .logout {
+            let logoutAlert: UIAlertController = UIAlertController.cancelableMessageAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", completion: {
+                UserDefaults.standard.set(nil, forKey: "userToken")
+                Common.shared.token = ""
+                UserDefaults.standard.set(nil, forKey: "loginType")
+                Common.shared.loginType = .none
+                let nextvc = LoginVC()
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootView(nextvc, animated: false)
+            })
+            self.present(logoutAlert, animated: true)
+        }
     }
 }
 
