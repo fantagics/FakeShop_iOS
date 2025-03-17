@@ -42,15 +42,10 @@ class LoginVM {
             }
         case .google:
             GIDSignIn.sharedInstance.signIn(withPresenting: currentVC) { signInResult, error in
-                print("GL: 1")
                 guard error == nil else { return }
-                print("GL: 2")
-                guard let token = signInResult?.user as? String else { return }
-                print("GL: 3")
+                guard let token = signInResult?.user.idToken?.tokenString else { return }
                 self.setLoginInfo(.google, token)
-                print("GL: 4")
                 completion(.success(token))
-                print("GL: 5")
             }
         case .kakao:
             // 카카오톡 실행 가능 여부 확인
