@@ -59,11 +59,13 @@ extension UserInfoTableCell{
         [userNameLabel].forEach{
             $0.font = UIFont.NanumGothic(type: .Bold, size: 22)
             $0.text = "USERNAME"
+            $0.textColor = .darkGray
         }
         
         [emailLabel].forEach{
             $0.font = UIFont.NanumGothic(type: .Regular, size: 14)
             $0.text = "USER@APPLE.COM"
+            $0.textColor = .darkGray
         }
         
     }

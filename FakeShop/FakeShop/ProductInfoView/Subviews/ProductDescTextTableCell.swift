@@ -30,6 +30,7 @@ extension ProductDescTextTableCell{
     }
     
     private func setAttribute(){
+        self.backgroundColor = .white
         desc.numberOfLines = 0
         desc.font = .NanumGothic(type: .Regular, size: 20)
         desc.textColor = .darkGray

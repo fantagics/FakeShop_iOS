@@ -45,14 +45,17 @@ extension RecommendItemCell{
         [titleLabel].forEach{
             $0.text = "제품명"
             $0.font = .NanumGothic(type: .Regular, size: 16)
+            $0.textColor = .black
         }
         [priceLabel].forEach{
             $0.text = "$199.9"
             $0.font = .NanumGothic(type: .Regular, size: 16)
+            $0.textColor = .black
         }
         [ratingLabel].forEach{
             $0.text = "⭐️ 4.6 / 🛒 400"
             $0.font = .NanumGothic(type: .Regular, size: 10)
+            $0.textColor = .black
         }
     }
     

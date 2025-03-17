@@ -51,15 +51,17 @@ extension ProductCollectionCell{
         
         [titleLabel].forEach{
             $0.font = .NanumGothic(type: .Bold, size: 20)
+            $0.textColor = .black
         }
         
         [ratingLabel].forEach{
             $0.font = .NanumGothic(type: .Regular, size: 14)
-            
+            $0.textColor = .black
         }
         
         [priceLabel].forEach{
             $0.font = .NanumGothic(type: .Bold, size: 20)
+            $0.textColor = .black
         }
     }
     

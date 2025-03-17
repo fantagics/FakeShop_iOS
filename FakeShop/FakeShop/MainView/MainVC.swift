@@ -134,6 +134,7 @@ extension MainVC{
         self.view.backgroundColor = .white
         
         [mainCollectionView].forEach{
+            $0.backgroundColor = .white
             $0.dataSource = self
             $0.delegate = self
             $0.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)

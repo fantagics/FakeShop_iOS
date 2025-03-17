@@ -38,6 +38,7 @@ extension SettingMenuTableCell{
     }
     
     private func setAttribute(){
+        self.backgroundColor = .white
         [shadowView].forEach{
             $0.layer.cornerRadius = 20
             $0.backgroundColor = .gray

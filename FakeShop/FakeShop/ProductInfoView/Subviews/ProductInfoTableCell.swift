@@ -55,6 +55,8 @@ extension ProductInfoTableCell{
     }
     
     private func setAttribute(){
+        self.backgroundColor = .white
+        
         for i in 0..<5{
             ratingStack.addArrangedSubview(UIImageView())
             starArray.append(ratingStack.subviews[i] as? UIImageView ?? UIImageView())
@@ -69,6 +71,7 @@ extension ProductInfoTableCell{
             $0.font = .NanumGothic(type: .Bold, size: 20)
             $0.numberOfLines = 2
             $0.text = "TITLE"
+            $0.textColor = .black
         }
         [ratingStack].forEach{
             $0.axis = .horizontal
@@ -84,6 +87,7 @@ extension ProductInfoTableCell{
         [price].forEach{
             $0.font = .NanumGothic(type: .Bold, size: 18)
             $0.text = "$ 0"
+            $0.textColor = .black
         }
         underline.backgroundColor = .darkGray
     }

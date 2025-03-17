@@ -117,6 +117,7 @@ extension SearchProductsVC{
             $0.register(ProductCollectionCell.self, forCellWithReuseIdentifier: ProductCollectionCell.identifier)
             $0.dataSource = self
             $0.delegate = self
+            $0.backgroundColor = .white
         }
         
         [categoryPicker, sortTypePicker].forEach{

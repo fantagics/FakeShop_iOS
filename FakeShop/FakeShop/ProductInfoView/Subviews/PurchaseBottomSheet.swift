@@ -76,6 +76,7 @@ extension PurchaseBottomSheet{
         [titleLabel].forEach{
             $0.numberOfLines = 1
             $0.font = .NanumGothic(type: .Bold, size: 24)
+            $0.textColor = .black
         }
         [priceLabel].forEach{
             $0.textColor = .primary

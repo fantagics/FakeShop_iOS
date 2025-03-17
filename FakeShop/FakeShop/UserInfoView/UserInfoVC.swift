@@ -8,6 +8,7 @@
 import UIKit
 
 class UserInfoVC: UIViewController {
+    private let vm: LoginVM = LoginVM()
     
     private let userInfoTableView: UITableView = UITableView()
     
@@ -61,6 +62,7 @@ extension UserInfoVC{
         self.view.backgroundColor = .white
         
         [userInfoTableView].forEach{
+            $0.backgroundColor = .white
             $0.dataSource = self
             $0.delegate = self
             $0.register(SettingMenuTableCell.self, forCellReuseIdentifier: SettingMenuTableCell.identifier)
@@ -115,10 +117,7 @@ extension UserInfoVC: UITableViewDelegate{
         print(#function)
         if indexPath.row > 0, SettingMenu(rawValue: indexPath.row - 1) == .logout {
             let logoutAlert: UIAlertController = UIAlertController.cancelableMessageAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", completion: {
-                UserDefaults.standard.set(nil, forKey: "userToken")
-                Common.shared.token = ""
-                UserDefaults.standard.set(nil, forKey: "loginType")
-                Common.shared.loginType = .none
+                self.vm.logout()
                 let nextvc = LoginVC()
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootView(nextvc, animated: false)
             })

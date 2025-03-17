@@ -21,6 +21,9 @@ class LoginVC: UIViewController {
     private let termsLabel: UILabel = UILabel()
     private let loginButton: UIButton = UIButton()
     private let signupButton: UIButton = UIButton()
+    private let googleButton: UIButton = UIButton()
+    private let kakaoButton: UIButton = UIButton()
+    private let appleButton: UIButton = UIButton()
     
     private lazy var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapEmptySpace(_:)))
     
@@ -70,8 +73,9 @@ extension LoginVC{
     }
     
     @objc private func didTapButton(_ sender: UIButton){
-        if sender == loginButton{
-            vm.loginValid(nameField, passwordField){ res in
+        switch sender{
+        case loginButton:
+            vm.loginValid(loginType: .email, idTextField: nameField, pwTextField: passwordField){ res in
                 switch res{
                 case .success(_):
                     let nextvc = MainTabBarController()
@@ -80,12 +84,35 @@ extension LoginVC{
                     self.present(UIAlertController.messageAlert(title: nil, message: err.message, completion: nil), animated: true)
                 }
             }
-            print("try Login")
-        } else if sender == signupButton{
+        case signupButton:
 //            let nextVC = UIHostingController(rootView: SignUpSV())
             let nextVC = SignUpVC()
             self.navigationController?.pushViewController(nextVC, animated: true)
-        } else { print("didTapButton : somthing is wrong..")}
+        case googleButton:
+            vm.loginValid(loginType: .google, currentVC: self){ res in
+                switch res{
+                case .success(_):
+                    let nextvc = MainTabBarController()
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootView(nextvc, animated: false)
+                case .failure(let err):
+                    self.present(UIAlertController.messageAlert(title: nil, message: err.message, completion: nil), animated: true)
+                }
+            }
+        case kakaoButton:
+            vm.loginValid(loginType: .kakao){ res in
+                switch res{
+                case .success(_):
+                    let nextvc = MainTabBarController()
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootView(nextvc, animated: false)
+                case .failure(let err):
+                    self.present(UIAlertController.messageAlert(title: nil, message: err.message, completion: nil), animated: true)
+                }
+            }
+        case appleButton:
+            print("APPLE LOGIN")
+        default:
+            print("didTapButton : somthing is wrong..")
+        }
     }
     
 }
@@ -205,6 +232,16 @@ extension LoginVC{
             $0.setTitleColor(.primaryColor, for: .normal)
             $0.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         }
+        
+        [googleButton, kakaoButton, appleButton].forEach{
+            $0.layer.cornerRadius = 20
+            $0.layer.borderWidth = 0.2
+            $0.layer.borderColor = UIColor.lightGray.cgColor
+            $0.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+        }
+        googleButton.setImage(UIImage(named: "google_logo"), for: .normal)
+        kakaoButton.setImage(UIImage(named: "kakao_logo"), for: .normal)
+        appleButton.setImage(UIImage(named: "apple_logo"), for: .normal)
     }
     //UI
     private func setUI(){
@@ -247,6 +284,21 @@ extension LoginVC{
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
+        let snsBtnStack: UIStackView = UIStackView()
+        [googleButton, kakaoButton, appleButton].forEach{
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            snsBtnStack.addArrangedSubview($0)
+        }
+        [snsBtnStack].forEach{
+            $0.axis = .horizontal
+            $0.alignment = .center
+            $0.distribution = .equalSpacing
+            $0.spacing = 16
+            loginBtnStack.addArrangedSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        
         
         NSLayoutConstraint.activate([
             loginPannel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -288,6 +340,11 @@ extension LoginVC{
             signupButton.widthAnchor.constraint(equalTo: loginButton.widthAnchor),
             signupButton.heightAnchor.constraint(equalTo: loginButton.heightAnchor),
             
+//            snsBtnStack.heightAnchor.constraint(equalTo: loginButton.heightAnchor),
+            snsBtnStack.heightAnchor.constraint(equalToConstant: 42),
+            googleButton.widthAnchor.constraint(equalTo: googleButton.heightAnchor),
+            kakaoButton.widthAnchor.constraint(equalTo: kakaoButton.heightAnchor),
+            appleButton.widthAnchor.constraint(equalTo: appleButton.heightAnchor),
             
             loginBtnStack.bottomAnchor.constraint(equalTo: loginPannel.bottomAnchor, constant: -16),
         ])

@@ -30,6 +30,7 @@ extension ProductImageTableCell{
     }
     
     private func setAttribute(){
+        self.backgroundColor = .white
         image.contentMode = .scaleAspectFit
     }
     

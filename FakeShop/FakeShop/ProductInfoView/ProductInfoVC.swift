@@ -69,6 +69,7 @@ extension ProductInfoVC{
         self.navigationController?.navigationBar.tintColor = .white
         
         [productInfoTable].forEach{
+            $0.backgroundColor = .white
             $0.dataSource = self
             $0.register(ProductImageTableCell.self, forCellReuseIdentifier: ProductImageTableCell.identifier)
             $0.register(ProductInfoTableCell.self, forCellReuseIdentifier: ProductInfoTableCell.identifier)
