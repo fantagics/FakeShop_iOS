@@ -53,12 +53,12 @@ class AuthRequest{
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 10
         
-        let params = [
-//            "username": id,
-//            "password": pw,
-            "username": "mor_2314",
-            "password": "83r5^_",
-        ] as Dictionary
+        var params: [String:String] = [:]
+#if DEBUG
+        params = ["username": "mor_2314", "password": "83r5^_"]
+#else
+        params = ["username": id, "password": pw]
+#endif
         do {
             try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
         } catch {
