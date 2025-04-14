@@ -187,7 +187,7 @@ extension SearchProductsVC: UICollectionViewDelegate{
 extension SearchProductsVC: CategoryTitleViewDelegate{
     func didTapTitle() {
         guard let prevIdx: Int = Common.shared.categories.firstIndex(of: self.category) else{return}
-        let alert: UIAlertController = UIAlertController.pickerViewActionSheet(prev: prevIdx, title: Translation.language.ko["Category"], picker: categoryPicker, completion: {
+        let alert: UIAlertController = UIAlertController.pickerViewActionSheet(prev: prevIdx, title: "Category".localized(), picker: categoryPicker, completion: {
             let selected: Int = self.categoryPicker.selectedRow(inComponent: 0)
             guard self.category != Common.shared.categories[selected] else{return}
             self.category = Common.shared.categories[selected]
@@ -219,7 +219,7 @@ extension SearchProductsVC: SearchTopBarDelegate{
     
     func didTapSortButton() {
         let prevIdx: Int = self.vm.sortType.rawValue
-        let alert: UIAlertController = UIAlertController.pickerViewActionSheet(prev: prevIdx, title: Translation.language.ko["Sort by"], picker: sortTypePicker, completion: {
+        let alert: UIAlertController = UIAlertController.pickerViewActionSheet(prev: prevIdx, title: "Sort by".localized(), picker: sortTypePicker, completion: {
             guard  self.vm.sortType != SortType(rawValue: self.sortTypePicker.selectedRow(inComponent: 0)) else{return}
             self.vm.sortType = SortType(rawValue: self.sortTypePicker.selectedRow(inComponent: 0)) ?? .recent
             self.vm.sortProducts()

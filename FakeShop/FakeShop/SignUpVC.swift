@@ -111,7 +111,7 @@ extension SignUpVC{
     }
     
     private func setNavigationBar(){
-        self.title = "회원가입"
+        self.title = "Sign Up".localized()
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.titleTextAttributes = [
@@ -143,13 +143,13 @@ extension SignUpVC{
         
         
         [testMessage].forEach{
-            $0.text = "실제로 회원가입이 이뤄지지 않습니다."
+            $0.text = "You will not actually be able to register as a member.".localized()
             $0.font = .systemFont(ofSize: 14)
             $0.textColor = .gray
         }
         
         [signUpButton].forEach{
-            $0.setTitle("회원가입", for: .normal)
+            $0.setTitle("Sign Up".localized(), for: .normal)
             $0.setTitleColor(.white, for: .normal)
             $0.backgroundColor = .primary
             $0.layer.cornerRadius = 20

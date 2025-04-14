@@ -105,7 +105,7 @@ extension UserInfoVC: UITableViewDataSource{
                 cell.iconView.image = UIImage(systemName: img, withConfiguration: UIImage.SymbolConfiguration(pointSize: 22))
             }
             if let title = SettingMenu(rawValue: indexPath.row - 1)?.str{
-                cell.titleLabel.text = Translation.language.ko[title] ?? ""
+                cell.titleLabel.text = title.localized()
             }
             return cell
         }
@@ -116,7 +116,7 @@ extension UserInfoVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
         if indexPath.row > 0, SettingMenu(rawValue: indexPath.row - 1) == .logout {
-            let logoutAlert: UIAlertController = UIAlertController.cancelableMessageAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", completion: {
+            let logoutAlert: UIAlertController = UIAlertController.cancelableMessageAlert(title: "logout".localized(), message: "Would you like to sign out?".localized(), completion: {
                 self.vm.logout()
                 let nextvc = LoginVC()
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootView(nextvc, animated: false)

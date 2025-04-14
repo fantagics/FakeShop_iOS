@@ -49,8 +49,8 @@ extension PurchaseBottomBar{
         self.layer.cornerRadius = 16
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
-        buyButton.setTitle(Translation.language.ko[Purchase.buy.str], for: .normal)
-        cartButton.setTitle(Translation.language.ko[Purchase.cart.str], for: .normal)
+        buyButton.setTitle(Purchase.buy.str.localized(), for: .normal)
+        cartButton.setTitle(Purchase.cart.str.localized(), for: .normal)
         [buyButton, cartButton].forEach{
             $0.titleLabel?.font = .NanumGothic(type: .Bold, size: 20)
             $0.setTitleColor(.primary, for: .normal)

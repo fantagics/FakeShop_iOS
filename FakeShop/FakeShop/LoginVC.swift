@@ -48,7 +48,6 @@ class LoginVC: UIViewController {
     return LoginVC()
 }
 
-
 //MARK: - Function
 extension LoginVC{
     @objc private func didTapEmptySpace(_ sender: UIGestureRecognizer){
@@ -62,11 +61,11 @@ extension LoginVC{
     
     @objc private func didTapLinkLabel(_ sender: UIGestureRecognizer){
         let point = sender.location(in: termsLabel)
-        if let serviceRect = termsLabel.boundingRectForCharacterRange(subText: "서비스 이용약관"),
+        if let serviceRect = termsLabel.boundingRectForCharacterRange(subText: "Terms of Service".localized()),
            serviceRect.contains(point){
             present(SFSafariViewController(url: URL.serviceTermsUrl), animated: true)
         }
-        if let serviceRect = termsLabel.boundingRectForCharacterRange(subText: "개인정보 이용약관"),
+        if let serviceRect = termsLabel.boundingRectForCharacterRange(subText: "Privacy Policy".localized()),
            serviceRect.contains(point){
             present(SFSafariViewController(url: URL.privateTermsUrl), animated: true)
         }
@@ -81,7 +80,7 @@ extension LoginVC{
                     let nextvc = MainTabBarController()
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootView(nextvc, animated: false)
                 case .failure(let err):
-                    self.present(UIAlertController.messageAlert(title: nil, message: err.message, completion: nil), animated: true)
+                    self.present(UIAlertController.messageAlert(title: nil, message: err.message.localized(), completion: nil), animated: true)
                 }
             }
         case signupButton:
@@ -134,7 +133,7 @@ extension LoginVC{
         view.addGestureRecognizer(tapGesture)
         
         [welcomeLabel].forEach{
-            $0.text = "환영합니다!"
+            $0.text = "Wellcome!".localized()
             $0.textColor = .black
             $0.textAlignment = .left
             $0.font = .boldSystemFont(ofSize: 40)
@@ -143,10 +142,10 @@ extension LoginVC{
             $0.numberOfLines = 0
             $0.textAlignment = .left
 //            $0.font = .systemFont(ofSize: 16)
-            let appName = "페이크샵"
+            let appName = "FakeShop".localized()
             let usedApiName = "fakestoreapi"
             let loginableData = "(mor_2314/83r5^_)"
-            let guideText = String(format: "'%@'은 '%@'을 사용한 가짜 쇼핑 앱입니다. %@", appName, usedApiName, loginableData)
+            let guideText = "'%@' is a fake shopping app that uses '%@'. %@".localized(a: appName, b: usedApiName, c: loginableData)
             let generalAttributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.systemFont(ofSize: 16),
                 .foregroundColor: UIColor.black.cgColor
@@ -196,9 +195,9 @@ extension LoginVC{
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLinkLabel(_:)))
             $0.addGestureRecognizer(tapGesture)
             
-            let serviceTerm = "서비스 이용약관"
-            let privateTerm = "개인정보 이용약관"
-            let guideText = String(format: "%@과 %@에 동의합니다.", serviceTerm, privateTerm)
+            let privateTerm = "Privacy Policy".localized()
+            let serviceTerm = "Terms of Service".localized()
+            let guideText = "I accept the %@ and the %@.".localized(a: privateTerm, b: serviceTerm)
             let generalAttributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.systemFont(ofSize: 13),
                 .foregroundColor: UIColor.black.cgColor
@@ -219,7 +218,7 @@ extension LoginVC{
         
         [loginButton].forEach{
             $0.backgroundColor = .primaryColor
-            $0.setTitle("로그인", for: .normal)
+            $0.setTitle("Sign In".localized(), for: .normal)
             $0.setTitleColor(.white, for: .normal)
             $0.titleLabel?.font = .boldSystemFont(ofSize: 20)
             $0.layer.cornerRadius = 20
@@ -227,7 +226,7 @@ extension LoginVC{
         }
         
         [signupButton].forEach{
-            $0.setTitle("회원가입", for: .normal)
+            $0.setTitle("Sign Up".localized(), for: .normal)
             $0.titleLabel?.font = .boldSystemFont(ofSize: 20)
             $0.setTitleColor(.primaryColor, for: .normal)
             $0.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)

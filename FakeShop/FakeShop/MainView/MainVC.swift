@@ -176,7 +176,7 @@ extension MainVC: UICollectionViewDataSource{
                 cell.imageView.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
                 cell.imageView.contentMode = .center
                 cell.imageView.tintColor = .black
-                cell.titleLabel.text = "더 보기"
+                cell.titleLabel.text = "more".localized()
                 cell.priceLabel.text = ""
                 cell.ratingLabel.text = ""
             } else {
@@ -201,7 +201,8 @@ extension MainVC: UICollectionViewDataSource{
               indexPath.section > 0,
               let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RecommendSectionHeader.identifier, for: indexPath) as? RecommendSectionHeader
         else{return UICollectionReusableView()}
-        header.titleLabel.text = Translation.language.ko[itemsOfCategory[indexPath.section - 1][0].category]
+        header.titleLabel.text = itemsOfCategory[indexPath.section - 1][0].category.localized()
+//        header.titleLabel.text = String(format: NSLocalizedString(itemsOfCategory[indexPath.section - 1][0].category, comment: ""))
         return header
     }
 }

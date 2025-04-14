@@ -42,7 +42,7 @@ extension PurchaseBottomSheet{
         titleLabel.text = product.title
         itemPrice = product.price
         priceLabel.text = itemPrice.toCurrencyFormat()
-        submitButton.setTitle(Translation.language.ko[type.str], for: .normal)
+        submitButton.setTitle(type.str.localized(), for: .normal)
         itemCount = 1
         countLabel.text = "\(itemCount)"
     }

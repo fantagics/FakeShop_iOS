@@ -10,7 +10,7 @@ import UIKit
 extension UIAlertController{
     static func messageAlert(title: String?, message: String?, completion: (()-> ())? )-> UIAlertController{
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default, handler: {_ in
+        let confirmAction = UIAlertAction(title: "Confirm".localized(), style: .default, handler: {_ in
             (completion ?? {})()
         })
         alertController.addAction(confirmAction)
@@ -19,10 +19,10 @@ extension UIAlertController{
     
     static func cancelableMessageAlert(title: String?, message: String?, completion: (()-> ())? )-> UIAlertController{
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .destructive, handler: {_ in
+        let confirmAction = UIAlertAction(title: "Confirm".localized(), style: .destructive, handler: {_ in
             (completion ?? {})()
         })
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel)
         confirmAction.setValue(UIColor.blue.withAlphaComponent(0.7), forKey: "titleTextColor")
         cancelAction.setValue(UIColor.black.withAlphaComponent(0.6), forKey: "titleTextColor")
         alertController.addAction(cancelAction)
@@ -39,7 +39,7 @@ extension UIAlertController{
         vc.view = picker
         alertController.setValue(vc, forKey: "contentViewController")
         
-        let confirm: UIAlertAction = UIAlertAction(title: Translation.language.ko["Apply"], style: .cancel){_ in
+        let confirm: UIAlertAction = UIAlertAction(title: "Apply".localized(), style: .cancel){_ in
             completion()
         }
         confirm.setValue(UIColor.primary, forKey: "titleTextColor")

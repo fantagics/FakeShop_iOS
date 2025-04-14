@@ -31,7 +31,8 @@ extension Test1VC{
 //        let nextvc = Test2VC()
 //        self.navigationController?.pushViewController(nextvc, animated: true)
         vm.addCount()
-        lb1.text = "\(vm.count)"
+//        lb1.text = "\(vm.count)"
+        lb1.text = "test: %@ , %@".localized(a: "ABC", b: "abc")
     }
 }
 

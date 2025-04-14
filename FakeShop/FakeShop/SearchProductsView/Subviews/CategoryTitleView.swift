@@ -29,7 +29,7 @@ class CategoryTitleView: UIView {
 //MARK: - Function
 extension CategoryTitleView{
     func setTitle(category: String){
-        titleLabel.text = (Translation.language.ko[category] ?? "Category") + " ▼"
+        titleLabel.text = category.localized() + " ▼"
     }
     @objc private func didTapTitle(_ sender: UITapGestureRecognizer){
         delegate?.didTapTitle()

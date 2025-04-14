@@ -69,13 +69,13 @@ extension SettingMenuTableCell{
         
         NSLayoutConstraint.activate([
             shadowView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            shadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            shadowView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            shadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            shadowView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -11.5),
             shadowView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             contentsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            contentsView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            contentsView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            contentsView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            contentsView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
             contentsView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -1),
             
             iconView.leadingAnchor.constraint(equalTo: contentsView.leadingAnchor, constant: 20),

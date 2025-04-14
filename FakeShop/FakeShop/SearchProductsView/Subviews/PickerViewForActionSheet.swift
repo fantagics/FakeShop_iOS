@@ -23,9 +23,9 @@ extension SearchProductsVC: UIPickerViewDataSource, UIPickerViewDelegate{
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == categoryPicker{
-            return Translation.language.ko[Common.shared.categories[row]]
+            return Common.shared.categories[row].localized()
         } else if pickerView == sortTypePicker{
-            return Translation.language.ko[SortType(rawValue: row)?.str ?? "error"]
+            return SortType(rawValue: row)?.str.localized() ?? "error"
         } else {return nil}
     }
 }

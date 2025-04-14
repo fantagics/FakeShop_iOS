@@ -143,7 +143,7 @@ extension ProductInfoVC: UITableViewDataSource{
             
             cell.selectionStyle = .none
             guard let prod = product else{return cell}
-            cell.category.text = Translation.language.ko[prod.category]
+            cell.category.text = prod.category.localized()
             cell.title.text = prod.title
             cell.setRatingStar(rate: prod.rating.rate)
             cell.ratingCount.text = "(\(prod.rating.count))"

@@ -73,7 +73,7 @@ extension SideMenuView{
         self.backgroundColor = .primary
         
         [titleLabel].forEach{
-            $0.text = Translation.language.ko["Category"]
+            $0.text = "Category".localized()
             $0.textColor = .white
             $0.font = .NanumGothic(type: .ExtraBold, size: 20)
         }
@@ -118,7 +118,7 @@ extension SideMenuView: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: CategoriesCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoriesCollectionCell.identifier, for: indexPath) as? CategoriesCollectionCell else{return UICollectionViewCell()}
         
-        cell.titleLabel.text = Translation.language.ko[Common.shared.categories[indexPath.item]]
+        cell.titleLabel.text = Common.shared.categories[indexPath.item].localized()
         
         return cell
     }
