@@ -34,15 +34,15 @@ enum TextFieldType: Int, CaseIterable{
     
     var placeholder: String{
         switch self{
-            case .id: return "영문, 숫자 조합 8자 이상"
-            case .password : return "영문, 숫자, 특수문자 포함 8자 이상"
-            case .confirmPassword : return "한번 더 입력해주세요"
-            case .firstName : return "이름"
-            case .lastName : return "성"
-            case .email : return "example@site.type"
-            case .address : return "주소"
-            case .phone : return "010-0000-0000"
-            default: return "error"
+        case .id: return "8+ characters, letters and numbers".localized()
+        case .password : return "8+ characters, letters, numbers, and special characters.".localized()
+        case .confirmPassword : return "Re-enter password".localized()
+        case .firstName : return "First Name".localized()
+        case .lastName : return "Last Name".localized()
+        case .email : return "example@site.type".localized()
+        case .address : return "Address".localized()
+        case .phone : return "010-0000-0000".localized()
+        default: return "error"
         }
     }
     
@@ -62,14 +62,14 @@ enum TextFieldType: Int, CaseIterable{
     
     var guideMessage: String{
         switch self{
-            case .id: return "영문 대소문자, 숫자 조합 8~20자로 입력해주세요"
-            case .password : return "영문 대소문자, 숫자, 특수문자 포함 8자 이상"
-            case .confirmPassword : return "위의 비밀번호와 일치하지 않습니다."
-            case .firstName : return "올바른 이름형식이 아닙니다."
-            case .lastName : return "올바른 성씨형식이 아닙니다."
-            case .email : return "example@site.type"
-            case .address : return "올바른 주소형식이 아닙니다."
-            case .phone : return "01*-****-****"
+        case .id: return "8~20 characters using upper/lowercase letters and numbers.".localized()
+        case .password : return "At least 8 characters, including upper/lowercase letters, numbers, and special characters.".localized()
+        case .confirmPassword : return "Passwords do not match.".localized()
+        case .firstName : return "Invalid first name format.".localized()
+        case .lastName : return "Invalid last name format.".localized()
+        case .email : return "example@site.type".localized()
+        case .address : return "Invalid adress format.".localized()
+        case .phone : return "01*-****-****".localized()
             default: return "error"
         }
     }
@@ -88,14 +88,14 @@ enum SignUpError: Int, Error{
     
     var validMessage: String{
         switch self{
-            case .idError: return "잘못된 id 입력입니다. 영문 대소문자, 숫자 조합 8~20자로 입력해주세요."
-            case .pwError : return "잘못된 password 입력입니다. 영문, 숫자, 특수문자 포함 8자 이상 입력해주세요."
-            case .confirmPwError : return "비밀번호와 비밀번호 재확인란이 일치하지 않습니다."
-            case .firstNameError : return "이름란이 비어었습니다. 한글자 이상 입력해주세요."
-            case .lastNameError : return "성씨란이 비어었습니다. 한글자 이상 입력해주세요."
-            case .emailError : return "올바른 email형식이 아닙니다."
-            case .addressError : return "올바른 주소형식이 아닙니다."
-            case .phoneError : return "올바른 핸드폰 번호 형식이 아닙니다."
+        case .idError: return "Invalid ID. Please enter 8~20 characters using upper/lowercase letters and numbers.".localized()
+        case .pwError : return "Invalid password. Please enter at least 8 characters, including upper/lowercase letters, numbers, and special characters.".localized()
+        case .confirmPwError : return "Passwords do not match".localized()
+        case .firstNameError : return "Please enter your first name (at least one character).".localized()
+        case .lastNameError : return "Please enter your last name (at least one character).".localized()
+        case .emailError : return "Invalid email format.".localized()
+        case .addressError : return "Invalid adress format.".localized()
+        case .phoneError : return "Invalid phone number format.".localized()
             default: return "error"
         }
     }

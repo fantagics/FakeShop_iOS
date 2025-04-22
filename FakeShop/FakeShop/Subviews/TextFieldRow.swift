@@ -54,6 +54,7 @@ extension TextFieldRow{
             $0.text = ""
             $0.font = .systemFont(ofSize: 12)
             $0.textColor = .orange
+            $0.numberOfLines = 2
         }
         
         [textField].forEach{
@@ -91,13 +92,17 @@ extension TextFieldRow{
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
+        let guideLabelCenterYConstraint: NSLayoutConstraint = guideLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
+        guideLabelCenterYConstraint.priority = .defaultHigh
+        
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             
-            guideLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
             guideLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 15),
-            guideLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -20),
+            guideLabel.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+            guideLabelCenterYConstraint,
+            guideLabel.bottomAnchor.constraint(lessThanOrEqualTo: textField.topAnchor),
             
             textField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             textField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 10),
